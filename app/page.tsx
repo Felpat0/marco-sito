@@ -307,16 +307,16 @@ export default function Home() {
             margin-left: 0;
           }
           .review-abs {
-            font-size: 0.95rem;
+            font-size: 1.1rem;
             max-width: 80vw;
           }
-          .review-1 { top: 4vw; left: 4vw; transform: rotate(-7deg); }
+          .review-1 { top: 8vw; left: 4vw; transform: rotate(-7deg); }
           .review-2 { top: 13vw; right: 7vw; transform: rotate(5deg); }
           .review-3 { bottom: 40vw; left: 10vw; transform: rotate(-4deg); }
-          .review-4 { bottom: 40vw; right: 10vw; transform: rotate(6deg); }
+          .review-4 { bottom: 50vw; right: 10vw; transform: rotate(6deg); }
           .review-5 { top: 25vw; left: 55vw; transform: translateX(-50%) rotate(-2deg); }
-          .review-6 { bottom: 22vw; right: 30vw; transform: rotate(3deg); }
-          .review-7 { top: 38vw; left: 12vw; transform: rotate(-5deg); }
+          .review-6 { bottom: 18vw; right: 30vw; transform: rotate(3deg); }
+          .review-7 { top: 50vw; left: 12vw; transform: rotate(-5deg); }
         }
       `}</style>
 
