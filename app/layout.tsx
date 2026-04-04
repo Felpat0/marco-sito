@@ -1,8 +1,8 @@
 import type { Metadata } from "next";
 
 export const metadata: Metadata = {
-  title: "Winter Countdown",
-  description: "Countdown to Winter Solstice 2025",
+  title: "44444444444444444444444444444444444444444444",
+  description: "444444444444444444444444444444444",
 };
 
 export default function RootLayout({
@@ -11,7 +11,7 @@ export default function RootLayout({
   children: React.ReactNode;
 }) {
   return (
-    <html lang="en">
+    <html lang="it">
       <body>{children}</body>
     </html>
   );
