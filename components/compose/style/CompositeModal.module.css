@@ -1,0 +1,187 @@
+.backdrop {
+  position: fixed;
+  inset: 0;
+  background: rgba(0, 0, 0, 0.75);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 1000;
+  padding: 16px;
+  backdrop-filter: blur(2px);
+}
+
+.modal {
+  background: #1f2937;
+  border-radius: 14px;
+  width: 100%;
+  max-width: 720px;
+  max-height: 90vh;
+  display: flex;
+  flex-direction: column;
+  overflow: hidden;
+  box-shadow: 0 24px 80px rgba(0, 0, 0, 0.65);
+  border: 1px solid rgba(255, 255, 255, 0.08);
+}
+
+.header {
+  padding: 14px 16px;
+  border-bottom: 1px solid #374151;
+  background: #111827;
+  flex-shrink: 0;
+}
+
+.actions {
+  display: flex;
+  gap: 10px;
+  justify-content: flex-end;
+  align-items: center;
+}
+
+/* ── Bottoni ── */
+.btnStart {
+  padding: 9px 20px;
+  border-radius: 8px;
+  font-size: 0.875rem;
+  font-weight: 600;
+  cursor: pointer;
+  border: none;
+  background: #10b981;
+  color: #fff;
+  font-family: inherit;
+  transition: background 0.2s;
+}
+
+.btnStart:hover {
+  background: #059669;
+}
+
+.btnDownload {
+  padding: 9px 20px;
+  border-radius: 8px;
+  font-size: 0.875rem;
+  font-weight: 600;
+  cursor: pointer;
+  border: none;
+  background: #6366f1;
+  color: #fff;
+  font-family: inherit;
+  transition:
+    background 0.2s,
+    opacity 0.2s;
+}
+
+.btnDownload:hover:not(:disabled) {
+  background: #4f46e5;
+}
+
+.btnDownload:disabled {
+  opacity: 0.45;
+  cursor: not-allowed;
+}
+
+.btnClose {
+  padding: 9px 13px;
+  border-radius: 8px;
+  font-size: 1rem;
+  font-weight: 600;
+  cursor: pointer;
+  border: none;
+  background: #374151;
+  color: #d1d5db;
+  font-family: inherit;
+  transition: background 0.2s;
+  margin-left: 4px;
+}
+
+.btnClose:hover {
+  background: #4b5563;
+}
+
+/* ── Body ── */
+.body {
+  flex: 1;
+  overflow-y: auto;
+  padding: 20px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  min-height: 200px;
+}
+
+.loadingWrapper {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 14px;
+}
+
+.spinner {
+  display: block;
+  width: 38px;
+  height: 38px;
+  border: 3px solid rgba(255, 255, 255, 0.12);
+  border-top-color: #6366f1;
+  border-radius: 50%;
+  animation: spin 0.75s linear infinite;
+}
+
+@keyframes spin {
+  to {
+    transform: rotate(360deg);
+  }
+}
+
+.statusText {
+  color: #9ca3af;
+  font-size: 0.875rem;
+  margin: 0;
+}
+
+.errorText {
+  color: #f87171;
+  font-size: 0.875rem;
+  text-align: center;
+}
+
+.compositeImage {
+  max-width: 100%;
+  max-height: 65vh;
+  object-fit: contain;
+  border-radius: 8px;
+  display: block;
+}
+
+@media (max-width: 640px) {
+  .modal {
+    max-height: 95svh;
+    border-radius: 10px;
+  }
+
+  .actions {
+    flex-wrap: wrap;
+    gap: 8px;
+  }
+
+  .btnStart,
+  .btnDownload {
+    flex: 1;
+    min-width: 80px;
+    padding: 10px 12px;
+    font-size: 0.8rem;
+  }
+
+  .btnClose {
+    padding: 10px 14px;
+    font-size: 0.95rem;
+    margin-left: 0;
+  }
+
+  .body {
+    padding: 12px;
+    min-height: 160px;
+  }
+
+  .compositeImage {
+    max-height: 55svh;
+  }
+}
