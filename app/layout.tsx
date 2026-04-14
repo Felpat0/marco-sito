@@ -1,4 +1,6 @@
 import type { Metadata } from "next";
+import { GameProvider } from "./gameContext";
+import "./globals.css";
 
 export const metadata: Metadata = {
   title: "44444444444444444444444444444444444444444444",
@@ -12,7 +14,9 @@ export default function RootLayout({
 }) {
   return (
     <html lang="it">
-      <body>{children}</body>
+      <body>
+        <GameProvider>{children}</GameProvider>
+      </body>
     </html>
   );
 }
