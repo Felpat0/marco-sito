@@ -1,3 +1,4 @@
+import RootLayoutClient from "@/components/RootLayoutClient";
 import type { Metadata } from "next";
 
 export const metadata: Metadata = {
@@ -12,7 +13,7 @@ export default function RootLayout({
 }) {
   return (
     <html lang="it">
-      <body>{children}</body>
+      <body><RootLayoutClient>{children}</RootLayoutClient></body>
     </html>
   );
 }
