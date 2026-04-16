@@ -4,6 +4,7 @@ import type { Metadata } from "next";
 export const metadata: Metadata = {
   title: "44444444444444444444444444444444444444444444",
   description: "444444444444444444444444444444444",
+  manifest: "/manifest.json",
 };
 
 export default function RootLayout({
