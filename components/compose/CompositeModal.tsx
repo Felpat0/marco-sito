@@ -25,7 +25,13 @@ export function CompositeModal({ mainImage, ovalImage, onClose }: Props) {
     setError(null);
     setCompositeUrl(null);
 
-    compose(mainImage.src, ovalImage.src, mainImage.overlayAnchor)
+    compose(
+      mainImage.cutImageUrl,
+      ovalImage.src,
+      mainImage.overlayAnchor,
+      (ovalImage.zoom ?? 1.0) * (mainImage.faceZoomMultiplier ?? 1.0),
+      (mainImage.mainLayer ?? "avanti") === "avanti",
+    )
       .then((url) => {
         if (!cancelled) {
           setCompositeUrl(url);

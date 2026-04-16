@@ -17,6 +17,8 @@ export function useImageComposer() {
       mainSrc: string,
       ovalSrc: string,
       anchor: { x: number; y: number } = { x: 50, y: 50 },
+      zoom: number = 1.0,
+      mainInFront: boolean = true,
     ): Promise<string> => {
       const [mainImg, ovalImg] = await Promise.all([
         loadImage(mainSrc),
@@ -30,23 +32,23 @@ export function useImageComposer() {
       const ctx = canvas.getContext("2d");
       if (!ctx) throw new Error("Canvas 2D context not available");
 
-      // 1. Disegna l'immagine base
-      ctx.drawImage(mainImg, 0, 0);
-
-      // 2. Centro dell'ovale calcolato dall'anchor (percentuali → pixel)
+      // 2. Centro della faccia calcolato dall'anchor (percentuali → pixel)
       const cx = canvas.width * (anchor.x / 100);
       const cy = canvas.height * (anchor.y / 100);
 
-      // larghezza = 35% del canvas, altezza = 120% della larghezza (forma ovale)
-      const ovalW = canvas.width * 0.35;
-      const ovalH = ovalW * 1.2;
+      // larghezza = 35% del canvas * zoom, altezza proporzionale al ratio naturale dell'immagine
+      const faceW = ovalImg.naturalWidth * zoom;
+      const faceH = faceW * (ovalImg.naturalHeight / ovalImg.naturalWidth);
 
-      ctx.save();
-      ctx.beginPath();
-      ctx.ellipse(cx, cy, ovalW / 2, ovalH / 2, 0, 0, Math.PI * 2);
-      ctx.clip();
-      ctx.drawImage(ovalImg, cx - ovalW / 2, cy - ovalH / 2, ovalW, ovalH);
-      ctx.restore();
+      if (mainInFront) {
+        // faccia dietro, cut davanti
+        ctx.drawImage(ovalImg, cx - faceW / 2, cy - faceH / 2, faceW, faceH);
+        ctx.drawImage(mainImg, 0, 0);
+      } else {
+        // cut dietro, faccia davanti
+        ctx.drawImage(mainImg, 0, 0);
+        ctx.drawImage(ovalImg, cx - faceW / 2, cy - faceH / 2, faceW, faceH);
+      }
 
       return canvas.toDataURL("image/png");
     },
