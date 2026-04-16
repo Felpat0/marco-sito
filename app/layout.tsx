@@ -1,4 +1,5 @@
 import RootLayoutClient from "@/components/RootLayoutClient";
+import "./globals.css";
 import type { Metadata } from "next";
 
 export const metadata: Metadata = {
@@ -18,11 +19,13 @@ export default function RootLayout({
         <link rel="manifest" href="/manifest.json" />
         <meta name="theme-color" content="#000000" />
         <link rel="apple-touch-icon" href="/icon-192x192.png" />
+        <meta
+          name="viewport"
+          content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no"
+        />
       </head>
       <body>
-        <RootLayoutClient>
-          {children}
-        </RootLayoutClient>
+        <RootLayoutClient>{children}</RootLayoutClient>
       </body>
     </html>
   );
