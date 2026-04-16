@@ -1,0 +1,84 @@
+/* ── Overlay ── */
+.overlay {
+  position: absolute;
+  inset: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background-color: rgba(0, 0, 0, 0.7);
+  z-index: 10;
+}
+
+.content {
+  text-align: center;
+  width: 100%;
+}
+
+.contentMessage{
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    gap: 5%;
+}
+
+.messageContent {
+    color: black;
+    font-size: 1rem;
+    margin-bottom: 1rem;
+    width: 50%;
+}
+.name {
+    position: absolute;
+    top: -15px;
+    font-size: 1.25rem;
+    font-weight: 700;
+    margin-bottom: 0.5rem;
+    color: #000;
+    text-shadow: -1px -1px 0 #fff, 1px -1px 0 #fff, -1px 1px 0 #fff, 1px 1px 0 #fff;
+}
+
+.message{
+    border-radius: 1rem;
+    padding: 5%;
+    background-color: #d1d5db;
+    margin: 10%;
+    position: relative;
+}
+.messageArrow{
+    position: absolute;
+    top: 100%;
+    left: 85%;
+    transform: translateY(-50%);
+    border-top: 15px solid transparent;
+    border-bottom: 15px solid transparent;
+    border-right: 15px solid #d1d5db;
+}
+
+/* ── Immagine mostro ── */
+.image {
+    margin-top: 30%;
+  width: 40%;
+  height: 40%;
+  object-fit: contain;
+  filter: drop-shadow(0 0 15px rgba(200, 0, 0, 0.6));
+}
+
+/* ── Bottone continua ── */
+.continueBtn {
+    position: absolute;
+    right: 40px;
+    top: 0;
+  padding: 0.75rem 1.5rem;
+  background-color: #eab308;
+  color: #000;
+  font-weight: 700;
+  border: none;
+  border-radius: 0.75rem;
+  cursor: pointer;
+  transition: background-color 0.15s;
+  margin-top: 1rem;
+}
+
+.continueBtn:hover {
+  background-color: #facc15;
+}

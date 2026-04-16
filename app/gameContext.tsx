@@ -1,7 +1,12 @@
 "use client";
 
 import React, { createContext, useContext, useState, useEffect } from "react";
-import { Character, setupEnemyPool } from "../utils/enemy";
+import {
+  Character,
+  Enemy,
+  RANDOM_FACTOR,
+  setupEnemyPool,
+} from "../utils/enemy";
 
 const GameContext = createContext<GameContextType | null>(null);
 
@@ -9,6 +14,25 @@ export enum GameEnd {
   WIN,
   LOSE,
   ENDGAME,
+}
+
+export enum EnemyMove {
+  ATTACK,
+  DEFEND,
+  HEAL,
+  IDLE,
+}
+
+// Restituisce una mossa casuale tra ATTACK, DEFEND, HEAL, IDLE
+export function getRandomEnemyMove(): EnemyMove {
+  const moves = [
+    EnemyMove.ATTACK,
+    EnemyMove.DEFEND,
+    EnemyMove.HEAL,
+    EnemyMove.IDLE,
+  ];
+  const idx = Math.floor(Math.random() * moves.length);
+  return moves[idx];
 }
 
 interface GameContextType {
@@ -23,6 +47,7 @@ interface GameContextType {
   isPlayerTurn: boolean;
   gameEnd: GameEnd | null;
   log: string;
+  enemyNextMove: EnemyMove;
 }
 //TODO: DA rimuovere e sostuituire con parte di chiara
 export const PLAYER_INIT: Character = {
@@ -40,23 +65,64 @@ export function GameProvider({ children }: { children: React.ReactNode }) {
   const [player, setPlayer] = useState<Character>(PLAYER_INIT);
   const [isPlayerTurn, setIsPlayerTurn] = useState(true);
 
-  const [enemies, setEnemies] = useState<Character[]>([]);
+  const [enemies, setEnemies] = useState<Enemy[]>([]);
 
   const [gameEnd, setGameEnd] = useState<GameEnd | null>(null);
   const [log, setLog] = useState("⚔️ La battaglia è iniziata!");
+
+  const [enemyNextMove, setEnemyNextMove] = useState<EnemyMove>(EnemyMove.IDLE);
 
   // Setup marco
   const setupPlayer = (image: string, name: string) => {
     setPlayer({ ...PLAYER_INIT, image, name });
   };
 
-  // Turno del mostro
-  const doMonsterTurn = (currentPlayerHp: number, defending?: number) => {
+  // Esegue la mossa scelta dal nemico
+  const doEnemyAction = (currentPlayerHp: number, defending?: number) => {
     setIsPlayerTurn(false);
     setTimeout(() => {
-      const dmg = randomInt(8, 22); //TODO: da bilanciare
-      const finalDmg = Math.max(0, dmg - (defending || 0));
-      const newHp = Math.max(0, currentPlayerHp - finalDmg);
+      let newHp = currentPlayerHp;
+      let logMsg = "";
+      let healed = 0;
+      const enemy = enemies[0];
+      if (!enemy) return;
+      switch (enemyNextMove) {
+        case EnemyMove.ATTACK: {
+          const min = Math.floor(enemy.attack * (1 - RANDOM_FACTOR));
+          const max = Math.ceil(enemy.attack * (1 + RANDOM_FACTOR));
+          const dmg = randomInt(min, max);
+          const finalDmg = Math.max(0, dmg - (defending || 0));
+          newHp = Math.max(0, currentPlayerHp - finalDmg);
+          logMsg = defending
+            ? `🛡️ Hai bloccato ${Math.min(defending, dmg)} danni!`
+            : `👾 Il nemico ti attacca per ${dmg} danni!`;
+          break;
+        }
+        case EnemyMove.DEFEND: {
+          const min = Math.floor(enemy.defense * (1 - RANDOM_FACTOR));
+          const max = Math.ceil(enemy.defense * (1 + RANDOM_FACTOR));
+          const def = randomInt(min, max);
+          logMsg = `🛡️ Il nemico si difende! (difesa ${def})`;
+          break;
+        }
+        case EnemyMove.HEAL: {
+          const min = Math.floor(enemy.heal * (1 - RANDOM_FACTOR));
+          const max = Math.ceil(enemy.heal * (1 + RANDOM_FACTOR));
+          healed = randomInt(min, max);
+          setEnemies((prev) => {
+            const arr = [...prev];
+            arr[0] = {
+              ...arr[0],
+              hp: Math.min(arr[0].maxHp, arr[0].hp + healed),
+            };
+            return arr;
+          });
+          logMsg = `💊 Il nemico si cura di ${healed} HP!`;
+          break;
+        }
+        default:
+          logMsg = "Il nemico non fa nulla.";
+      }
 
       setPlayer((p) => ({ ...p, hp: newHp }));
 
@@ -65,11 +131,8 @@ export function GameProvider({ children }: { children: React.ReactNode }) {
         setLog("💀 Il nemico ti ha sconfitto!");
       } else {
         setIsPlayerTurn(true);
-        setLog(
-          defending
-            ? `🛡️ Hai bloccato ${Math.min(defending, dmg)} danni!`
-            : `👾 Il nemico ti attacca per ${dmg} danni!`,
-        );
+        setEnemyNextMove(getRandomEnemyMove());
+        setLog(logMsg);
       }
     }, 1200);
   };
@@ -87,11 +150,15 @@ export function GameProvider({ children }: { children: React.ReactNode }) {
 
     setGameEnd(null);
     setEnemies(enemiesTemp);
+    setEnemyNextMove(getRandomEnemyMove());
   };
 
   const startGame = () => {
     setPlayer(PLAYER_INIT);
+
     setEnemies(setupEnemyPool());
+    setEnemyNextMove(getRandomEnemyMove());
+
     setGameEnd(null);
     setLog("⚔️ La battaglia è iniziata!");
   };
@@ -110,13 +177,13 @@ export function GameProvider({ children }: { children: React.ReactNode }) {
       return;
     }
     setLog(`⚔️ Attacchi per ${dmg} danni!`);
-    doMonsterTurn(player.hp);
+    doEnemyAction(player.hp);
   };
 
   const defend = (value: number) => {
     if (!isPlayerTurn || gameEnd) return;
     setLog("🛡️ Ti metti in posizione difensiva...");
-    doMonsterTurn(player.hp, value);
+    doEnemyAction(player.hp, value);
   };
 
   const heal = (value: number) => {
@@ -128,7 +195,7 @@ export function GameProvider({ children }: { children: React.ReactNode }) {
     const actual = newHp - player.hp;
     setLog(`💊 Recuperi ${actual} HP!`);
 
-    doMonsterTurn(newHp);
+    doEnemyAction(newHp);
   };
 
   return (
@@ -136,6 +203,7 @@ export function GameProvider({ children }: { children: React.ReactNode }) {
       value={{
         player,
         enemy: enemies[0],
+        enemyNextMove,
         nextEnemy,
         startGame,
         setupPlayer,

@@ -71,41 +71,6 @@
   font-size: 1.125rem;
 }
 
-/* ── Barra HP ── */
-.hp-bar-bg {
-  width: 100%;
-  background-color: #374151;
-  border-radius: 9999px;
-  height: 1rem;
-  margin-bottom: 0.25rem;
-}
-
-.hp-bar-fill {
-  height: 1rem;
-  border-radius: 9999px;
-  transition: width 0.5s ease;
-}
-
-.hp-bar-fill--player {
-  background-color: #22c55e;
-}
-
-.hp-bar-fill--monster {
-  background-color: #ef4444;
-}
-
-.hp-text {
-  font-weight: 700;
-}
-
-.hp-text--player {
-  color: #4ade80;
-}
-
-.hp-text--monster {
-  color: #f87171;
-}
-
 /* ── Immagini personaggi ── */
 .character-img {
   width: 10rem;
