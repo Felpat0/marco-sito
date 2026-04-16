@@ -1,3 +1,4 @@
+"use client";
 // Register the service worker and handle PWA install prompt
 import { useEffect } from "react";
 
