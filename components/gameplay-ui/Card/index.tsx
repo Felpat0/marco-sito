@@ -2,27 +2,20 @@
 import { getStyleFromStructure } from "@/utils";
 import { getCardStyles } from "./style";
 import { useCallback, useEffect, useRef, useState } from "react";
-import { getCardHeightOffset, getCardRotation, onCardTouchMove } from "./utils";
+import { onCardTouchMove } from "./utils";
+import { CardType } from "@/features/cardsManagement/types";
 
-export type CardProps = {
-  id: number;
+export type CardProps = CardType & {
   index?: number;
   cardsNumber?: number;
-  name: string;
-  description?: string;
-  imageUrl: string;
-  type: string;
-  power: number;
   onStartDrag?: () => void;
   onRelease?: (event: TouchEvent) => void;
 };
 
 export const Card = ({
-  id,
   index = 0,
   cardsNumber = 1,
   name,
-  description,
   imageUrl,
   type,
   power,
@@ -56,6 +49,7 @@ export const Card = ({
         return;
       }
       setIsHovered(true);
+      onStartDrag?.();
       const touchPosition = {
         y: event.touches[0].clientY,
         x: event.touches[0].clientX,
@@ -124,7 +118,6 @@ export const Card = ({
       >
         {name}
       </h3>
-      {description && <p>{description}</p>}
       {/* <span className="type">{type}</span>
       <span className="power">{power}</span> */}
     </div>

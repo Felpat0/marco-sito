@@ -2,14 +2,14 @@
 import { useRef, useState } from "react";
 import { Card, CardProps } from "../Card";
 import { handStyles } from "./style";
+import { CardType } from "@/features/cardsManagement/types";
 
 export type HandProps = {
-  cards: CardProps[];
-  setCards?: (cards: CardProps[]) => void;
-  onCardPlay?: (card: CardProps) => void;
+  cards: CardType[];
+  onCardPlay?: (cardId: CardType["id"]) => void;
 };
 
-export const Hand = ({ cards, setCards, onCardPlay }: HandProps) => {
+export const Hand = ({ cards, onCardPlay }: HandProps) => {
   const containerRef = useRef<HTMLDivElement>(null);
   const [isDraggingCard, setIsDraggingCard] = useState(false);
   return (
@@ -40,8 +40,7 @@ export const Hand = ({ cards, setCards, onCardPlay }: HandProps) => {
                 event.changedTouches[0].clientY >= containerRect.top &&
                 event.changedTouches[0].clientY <= containerRect.bottom;
               if (!isInContainer) {
-                onCardPlay?.(card);
-                setCards?.(cards.filter((c) => c !== card));
+                onCardPlay?.(card?.id);
               }
             }
           }}
