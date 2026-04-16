@@ -1,5 +1,5 @@
 "use client";
-import { useRef } from "react";
+import { useRef, useState } from "react";
 import { Card, CardProps } from "../Card";
 import { handStyles } from "./style";
 
@@ -11,6 +11,7 @@ export type HandProps = {
 
 export const Hand = ({ cards, setCards, onCardPlay }: HandProps) => {
   const containerRef = useRef<HTMLDivElement>(null);
+  const [isDraggingCard, setIsDraggingCard] = useState(false);
   return (
     <div
       className="hand-container"
@@ -21,11 +22,15 @@ export const Hand = ({ cards, setCards, onCardPlay }: HandProps) => {
         <Card
           key={index}
           id={card.id}
+          index={index}
+          cardsNumber={isDraggingCard ? cards.length - 1 : cards.length}
           name={card.name}
           imageUrl={card.imageUrl}
           type={card.type}
           power={card.power}
+          onStartDrag={() => setIsDraggingCard(true)}
           onRelease={(event) => {
+            setIsDraggingCard(false);
             const containerRect = containerRef.current?.getBoundingClientRect();
 
             if (containerRect) {

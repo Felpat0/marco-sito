@@ -1,25 +1,32 @@
 "use client";
 import { getStyleFromStructure } from "@/utils";
-import { cardStyles } from "./style";
+import { getCardStyles } from "./style";
 import { useCallback, useEffect, useRef, useState } from "react";
-import { onCardTouchMove } from "./utils";
+import { getCardHeightOffset, getCardRotation, onCardTouchMove } from "./utils";
 
 export type CardProps = {
   id: number;
+  index?: number;
+  cardsNumber?: number;
   name: string;
   description?: string;
   imageUrl: string;
   type: string;
   power: number;
+  onStartDrag?: () => void;
   onRelease?: (event: TouchEvent) => void;
 };
 
 export const Card = ({
+  id,
+  index = 0,
+  cardsNumber = 1,
   name,
   description,
   imageUrl,
   type,
   power,
+  onStartDrag,
   onRelease,
 }: CardProps) => {
   const [isHovered, setIsHovered] = useState(false);
@@ -88,17 +95,33 @@ export const Card = ({
       ref={cardContainerRef}
       className="card"
       style={{
-        ...getStyleFromStructure(cardStyles, "cardContainer", isHovered),
-        backgroundImage: `url(${imageUrl})`,
-        ...(isHovered
-          ? {
-              top: touchPosition.top - initialPositionOffset.top,
-              left: touchPosition.left - initialPositionOffset.left,
-            }
-          : {}),
+        ...getStyleFromStructure(
+          getCardStyles({
+            index,
+            cardsNumber,
+            isHovered,
+            touchPosition,
+            initialPositionOffset,
+            imageUrl,
+          }),
+          "cardContainer",
+          isHovered
+        ),
       }}
     >
-      <h3 style={getStyleFromStructure(cardStyles, "cardName", isHovered)}>
+      <h3
+        style={getStyleFromStructure(
+          getCardStyles({
+            index,
+            cardsNumber,
+            isHovered,
+            touchPosition,
+            initialPositionOffset,
+          }),
+          "cardName",
+          isHovered
+        )}
+      >
         {name}
       </h3>
       {description && <p>{description}</p>}
