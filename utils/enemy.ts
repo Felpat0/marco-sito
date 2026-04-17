@@ -39,22 +39,26 @@ export const ENEMY_HEAL_INCREMENT = 0.2;
 export const ENEMY_POOL: EnemyDB[] = [
   {
     name: "Goblin",
-    finalMessage: "Un goblin malvagio appare!",
+    finalMessage:
+      "Un goblin malvagio appare! Lorem ipsum dolor sit amet, un drago feroce appare! Lorem ipsum dolor sit amet, un drago feroce appare!",
     image: "https://placehold.co/160x160/a855f7/fff?text=Goblin",
   },
   {
     name: "Drago",
-    finalMessage: "Lorem ipsum dolor sit amet, un drago feroce appare!",
+    finalMessage:
+      "Lorem ipsum dolor sit amet, un drago feroce appare!Lorem ipsum dolor sit amet, un drago feroce appare!",
     image: "https://placehold.co/160x160/ef4444/fff?text=Drago",
   },
   {
     name: "Scheletro",
-    finalMessage: "Uno scheletro inquietante appare!",
+    finalMessage:
+      "Uno scheletro inquietante appare!  Lorem ipsum dolor sit amet, un drago feroce appare! Lorem ipsum dolor sit amet, un drago feroce appare!",
     image: "https://placehold.co/160x160/94a3b8/fff?text=Scheletro",
   },
   {
     name: "Gabbibbo",
-    finalMessage: "Il temibile Gabbibbo appare!",
+    finalMessage:
+      "Il temibile Gabbibbo appare! Lorem ipsum dolor sit amet, un drago feroce appare! Lorem ipsum dolor sit amet, un drago feroce appare!",
     image: "https://placehold.co/160x160/94a3b8/fff?text=Gabbibbo",
   },
 ];

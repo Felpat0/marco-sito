@@ -3,6 +3,7 @@ import React from "react";
 import { motion } from "framer-motion";
 import styles from "./HealAnimation.module.css";
 import { useGame } from "@/app/gameContext";
+import { BiPlusMedical } from "react-icons/bi";
 
 const crosses = Array.from({ length: 6 });
 
@@ -30,8 +31,8 @@ export default function HealAnimation() {
           initial={{ opacity: 0, y: 20, x: 0 }}
           animate={{
             opacity: [0, 1, 1, 0],
-            y: [20, -40, -70, -100],
-            x: (i % 2 === 0 ? 1 : -1) * (8 + i * 5),
+            y: [40, -40, -70, -90],
+            x: (i % 2 === 0 ? 1 : -1) * (8 + i * 10),
           }}
           exit={{ opacity: 0 }}
           transition={{
@@ -39,9 +40,13 @@ export default function HealAnimation() {
             delay: i * 0.08,
             ease: "easeOut",
           }}
-          style={{ left: `${20 + i * 12}%` }}
+          style={{ left: `${i * 20}%` }}
         >
-          ✚
+          <BiPlusMedical
+            style={{ width: "100%", height: "100%" }}
+            size={"24px"}
+            color="#3dff7e"
+          />
         </motion.span>
       ))}
     </>

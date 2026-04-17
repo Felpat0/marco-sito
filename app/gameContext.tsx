@@ -101,6 +101,7 @@ export function GameProvider({ children }: { children: React.ReactNode }) {
 
   const [enemyNextMove, setEnemyNextMove] = useState<EnemyMove>(EnemyMove.IDLE);
   const [enemyNextMoveValue, setEnemyNextMoveValue] = useState<number>(0);
+  const [enemyDefenseValue, setEnemyDefenseValue] = useState<number>(0);
 
   const [playerAnimation, setPlayerAnimation] = useState<AnimationType>(null);
   const [enemyAnimation, setEnemyAnimation] = useState<AnimationType>(null);
@@ -138,6 +139,7 @@ export function GameProvider({ children }: { children: React.ReactNode }) {
         }
         case EnemyMove.DEFEND: {
           logMsg = `🛡️ Il nemico si difende! (difesa ${val})`;
+          setEnemyDefenseValue(val);
           setEnemyAnimation("defend");
           break;
         }
@@ -159,6 +161,10 @@ export function GameProvider({ children }: { children: React.ReactNode }) {
       }
 
       setPlayer((p) => ({ ...p, hp: newHp }));
+
+      if (enemyNextMove !== EnemyMove.DEFEND) {
+        setEnemyDefenseValue(0);
+      }
 
       if (newHp <= 0) {
         setGameEnd(GameEnd.LOSE);
@@ -207,19 +213,27 @@ export function GameProvider({ children }: { children: React.ReactNode }) {
   // Azioni del giocatore
   const attack = (value: number) => {
     if (!isPlayerTurn || gameEnd) return;
-    const dmg = value;
+    const blocked = enemyDefenseValue;
+    const dmg = Math.max(0, value - blocked);
     const newMonsterHp = Math.max(0, enemies[0].hp - dmg);
     const newEnemies = [...enemies];
     newEnemies[0] = { ...newEnemies[0], hp: newMonsterHp };
     setEnemies(newEnemies);
     if (newMonsterHp <= 0) {
-      setGameEnd(GameEnd.WIN);
-      setLog(`⚔️ Colpo finale per ${dmg} danni! Hai vinto!`);
-      return;
+      setTimeout(() => {
+        setGameEnd(GameEnd.WIN);
+        setLog(`⚔️ Colpo finale per ${dmg} danni! Hai vinto!`);
+        return;
+      }, 750);
+    } else {
+      const logMsg =
+        blocked > 0
+          ? `⚔️ Attacchi per ${value} danni, ma il nemico blocca ${blocked}! Danno effettivo: ${dmg}`
+          : `⚔️ Attacchi per ${dmg} danni!`;
+      setLog(logMsg);
+      setEnemyAnimation("damage");
+      doEnemyAction(player.hp);
     }
-    setLog(`⚔️ Attacchi per ${dmg} danni!`);
-    setEnemyAnimation("damage");
-    doEnemyAction(player.hp);
   };
 
   const defend = (value: number) => {
