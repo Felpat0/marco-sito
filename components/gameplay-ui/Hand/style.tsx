@@ -4,14 +4,16 @@ import { getCardStyles } from "../Card/style";
 export const handStyles: StyleStructure = {
   handContainer: {
     base: {
-      height: getCardStyles({}).cardContainer.base.height,
+      height: `${getCardStyles({}).cardContainer.base.height}`,
       width: "100%",
       display: "flex",
       flexDirection: "row",
       justifyContent: "center",
       alignItems: "center",
       gap: "0px",
-      padding: "16px",
+      paddingTop: "70px",
+      paddingBottom: "5px",
+      backgroundColor: "rgba(0, 0, 0, 0.2)",
     },
   },
 };
