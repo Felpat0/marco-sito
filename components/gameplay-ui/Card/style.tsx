@@ -27,7 +27,7 @@ export const getCardStyles: (args: CardStylesArguments) => StyleStructure = ({
       border: "1px solid #ccc",
       borderRadius: "8px",
       padding: "16px",
-      marginTop: getCardHeightOffset(index, cardsNumber),
+      marginBottom: `calc(-20px + ${getCardHeightOffset(index, cardsNumber)}px)`,
       backgroundSize: "cover",
       backgroundPosition: "center",
       aspectRatio: "3 / 4",
@@ -36,18 +36,15 @@ export const getCardStyles: (args: CardStylesArguments) => StyleStructure = ({
       transform: `rotate(${getCardRotation(index, cardsNumber)}deg) scale(1)`,
       transition: "transform 0.3s ease",
       backgroundImage: `url(${imageUrl})`,
-      ...(isHovered
-        ? {
-            top: touchPosition?.top - initialPositionOffset?.top,
-            left: touchPosition?.left - initialPositionOffset?.left,
-          }
-        : {}),
     },
     hover: {
       position: "absolute",
       transform: `rotate(0deg) scale(1.5)`,
       transition: "transform 0.3s ease",
       zIndex: 100,
+      top: touchPosition?.top - initialPositionOffset?.top,
+      left: touchPosition?.left - initialPositionOffset?.left,
+      marginTop: 0,
     },
   },
   cardName: {

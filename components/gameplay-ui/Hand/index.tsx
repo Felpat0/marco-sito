@@ -12,12 +12,16 @@ export type HandProps = {
 export const Hand = ({ cards, onCardPlay }: HandProps) => {
   const containerRef = useRef<HTMLDivElement>(null);
   const [isDraggingCard, setIsDraggingCard] = useState(false);
+
   return (
     <div
       className="hand-container"
-      ref={containerRef}
       style={{ ...handStyles.handContainer.base }}
     >
+      <div
+        ref={containerRef}
+        style={{ ...handStyles.playContainer.base }}
+      ></div>
       {cards.map((card, index) => (
         <Card
           key={index}
@@ -39,7 +43,7 @@ export const Hand = ({ cards, onCardPlay }: HandProps) => {
                 event.changedTouches[0].clientX <= containerRect.right &&
                 event.changedTouches[0].clientY >= containerRect.top &&
                 event.changedTouches[0].clientY <= containerRect.bottom;
-              if (!isInContainer) {
+              if (isInContainer) {
                 onCardPlay?.(card?.id);
               }
             }

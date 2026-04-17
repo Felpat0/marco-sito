@@ -1,18 +1,24 @@
 import { StyleStructure } from "@/types";
-import { getCardStyles } from "../Card/style";
 
 export const handStyles: StyleStructure = {
   handContainer: {
     base: {
-      height: `${getCardStyles({}).cardContainer.base.height}`,
+      height: "100%",
       width: "100%",
       display: "flex",
       flexDirection: "row",
       justifyContent: "center",
-      alignItems: "center",
+      alignItems: "flex-end",
       gap: "0px",
-      paddingTop: "70px",
-      paddingBottom: "5px",
+    },
+  },
+  playContainer: {
+    base: {
+      position: "absolute",
+      top: 0,
+      left: 0,
+      width: "100%",
+      height: "60vh",
     },
   },
 };

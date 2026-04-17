@@ -1,5 +1,5 @@
 const CARDS_ROTATION = 5;
-const CARDS_HEIGHT_OFFSET = 30;
+const CARDS_HEIGHT_OFFSET = 10;
 
 export const onCardTouchMove = (
   event: TouchEvent,
@@ -25,7 +25,7 @@ export const getCardRotation = (index: number, totalCards: number) => {
 
 export const getCardHeightOffset = (index: number, totalCards: number) => {
   const centerIndex = totalCards / 2 - 0.5;
-  const offset = Math.abs(index - centerIndex);
+  const offset = -1 * Math.abs(index - centerIndex);
 
   return offset * CARDS_HEIGHT_OFFSET; // Adjust the multiplier for more or less height difference
 };
