@@ -1,10 +1,10 @@
 "use client";
 
-import type { OvalImage } from "@/lib/imageData";
+import type { FaceImage } from "@/lib/imageData";
 import styles from "./style/OvalItem.module.css";
 
 interface Props {
-  oval: OvalImage;
+  oval: FaceImage;
   isSelected: boolean;
   onSelect: (ovalId: string) => void;
 }
@@ -18,7 +18,8 @@ export function OvalItem({ oval, isSelected, onSelect }: Props) {
       tabIndex={0}
       aria-pressed={isSelected}
       aria-label={`Seleziona ${oval.label}`}
-      onKeyDown={(e) => e.key === "Enter" && onSelect(oval.id)}>
+      onKeyDown={(e) => e.key === "Enter" && onSelect(oval.id)}
+    >
       <div className={styles.imageWrapper}>
         {/* eslint-disable-next-line @next/next/no-img-element */}
         <img
@@ -28,7 +29,6 @@ export function OvalItem({ oval, isSelected, onSelect }: Props) {
           draggable={false}
         />
       </div>
-      <span className={styles.label}>{oval.label}</span>
     </div>
   );
 }

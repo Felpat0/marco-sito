@@ -3,17 +3,17 @@
 import { useEffect, useRef, useState, useCallback } from "react";
 import { useRouter } from "next/navigation";
 import { useImageComposer } from "@/hooks/useImageComposer";
-import type { MainImage, OvalImage } from "@/lib/imageData";
+import type { MainImage, FaceImage } from "@/lib/imageData";
 import styles from "./style/CompositeModal.module.css";
 import { useGame } from "@/app/gameContext";
 
 interface Props {
   mainImage: MainImage;
-  ovalImage: OvalImage;
+  faceImage: FaceImage;
   onClose: () => void;
 }
 
-export function CompositeModal({ mainImage, ovalImage, onClose }: Props) {
+export function CompositeModal({ mainImage, faceImage, onClose }: Props) {
   const { setupPlayer } = useGame();
   const router = useRouter();
   const { compose } = useImageComposer();
@@ -31,9 +31,9 @@ export function CompositeModal({ mainImage, ovalImage, onClose }: Props) {
 
     compose(
       mainImage.cutImageUrl,
-      ovalImage.src,
+      faceImage.src,
       mainImage.overlayAnchor,
-      (ovalImage.zoom ?? 1.0) * (mainImage.faceZoomMultiplier ?? 1.0),
+      (faceImage.zoom ?? 1.0) * (mainImage.faceZoomMultiplier ?? 1.0),
       (mainImage.mainLayer ?? "avanti") === "avanti"
     )
       .then((url) => {
@@ -54,7 +54,7 @@ export function CompositeModal({ mainImage, ovalImage, onClose }: Props) {
     return () => {
       cancelled = true;
     };
-  }, [compose, mainImage.src, ovalImage.src]);
+  }, [compose, mainImage.src, faceImage.src]);
 
   // Chiudi con tasto Escape
   useEffect(() => {
@@ -76,12 +76,15 @@ export function CompositeModal({ mainImage, ovalImage, onClose }: Props) {
     if (!compositeUrl) return;
     const a = document.createElement("a");
     a.href = compositeUrl;
-    a.download = `composite_${mainImage.id}_${ovalImage.id}.png`;
+    a.download = `${mainImage.name} ${faceImage.label}.png`;
     a.click();
-  }, [compositeUrl, mainImage.id, ovalImage.id]);
+  }, [compositeUrl, mainImage.name, faceImage.label]);
 
   const handleStart = () => {
-    setupPlayer(compositeUrl ?? mainImage.src, "TEST");
+    setupPlayer(
+      compositeUrl ?? mainImage.src,
+      mainImage.name + " " + faceImage.label
+    );
     router.push("/game");
   };
 
@@ -96,6 +99,9 @@ export function CompositeModal({ mainImage, ovalImage, onClose }: Props) {
     >
       <div className={styles.modal}>
         <header className={styles.header}>
+          <div className={styles.title}>
+            {mainImage.name} {faceImage.label}
+          </div>
           <div className={styles.actions}>
             <button className={styles.btnStart} onClick={handleStart}>
               Start!
