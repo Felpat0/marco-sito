@@ -1,0 +1,48 @@
+.hp-bar-wrapper {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 0.25rem;
+  width: 100%;
+}
+
+.hp-bar-bg {
+  position: relative;
+  width: 100%;
+  background-color: #374151;
+  border-radius: 9999px;
+  height: 1.375rem;
+}
+
+.hp-bar-fill {
+  height: 100%;
+  border-radius: 9999px;
+  transition: width 0.5s ease;
+  min-width: 0;
+}
+
+.hp-bar-fill--player {
+  background-color: #22c55e;
+}
+
+.hp-bar-fill--monster {
+  background-color: #ef4444;
+}
+
+.hp-bar-text {
+  position: absolute;
+  inset: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 0.7rem;
+  font-weight: 700;
+  color: #fff;
+  text-shadow:
+    0 0 3px rgba(0, 0, 0, 0.9),
+    0 0 3px rgba(0, 0, 0, 0.9),
+    0 0 3px rgba(0, 0, 0, 0.9);
+  pointer-events: none;
+  user-select: none;
+  white-space: nowrap;
+}

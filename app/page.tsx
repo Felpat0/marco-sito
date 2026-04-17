@@ -1,5 +1,6 @@
 "use client";
 
+import { useRouter } from "next/navigation";
 import { useState, useEffect, useRef } from "react";
 
 interface TimeLeft {
@@ -58,6 +59,7 @@ export default function Home() {
   const [time, setTime] = useState<TimeLeft>(getTimeLeft(TARGET_DATE));
   const [particles, setParticles] = useState<React.CSSProperties[]>([]);
   const [mounted, setMounted] = useState(false);
+  const router = useRouter();
 
   useEffect(() => {
     setMounted(true);
@@ -348,7 +350,9 @@ export default function Home() {
           <Particle key={i} style={style} />
         ))}
 
-        <p className="title-top">Grande countdown per il grande regalo per il grande bimbo</p>
+        <p className="title-top">
+          Grande countdown per il grande regalo per il grande bimbo
+        </p>
 
         <div className="clock-wrapper">
           <CountUnit value={String(time.days)} label="Days" />
@@ -362,12 +366,15 @@ export default function Home() {
           <span className="review-abs review-1">4/4 IGN</span>
           <span className="review-abs review-2">Best gifto del mondo</span>
           <span className="review-abs review-3">Capolavoro assoluto</span>
-          <span className="review-abs review-4">Un regalo che cambia la vita</span>
+          <span className="review-abs review-4">
+            Un regalo che cambia la vita
+          </span>
           <span className="review-abs review-5">Consigliatissimo ⭐⭐⭐⭐</span>
-          <span className="review-abs review-6">Più bello di Pokémon Z-A (e meno male)</span>
+          <span className="review-abs review-6">
+            Più bello di Pokémon Z-A (e meno male)
+          </span>
           <span className="review-abs review-7">Non ci dormo la notte</span>
         </>
-
       </div>
     </>
   );

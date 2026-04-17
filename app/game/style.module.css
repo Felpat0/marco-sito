@@ -1,0 +1,114 @@
+/* ── Layout principale ── */
+.game-page {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: space-between;
+  min-height: 100vh;
+  background-color: #111827;
+  padding: 1rem;
+}
+
+/* ── Overlay game over ── */
+.game-overlay {
+  position: absolute;
+  inset: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background-color: rgba(0, 0, 0, 0.7);
+  z-index: 10;
+}
+
+.game-overlay-content {
+  text-align: center;
+}
+
+.game-over-title {
+  font-size: 2.25rem;
+  font-weight: 700;
+  color: #fff;
+  margin-bottom: 1rem;
+}
+
+.game-replay-btn {
+  padding: 0.75rem 1.5rem;
+  background-color: #eab308;
+  color: #000;
+  font-weight: 700;
+  border: none;
+  border-radius: 0.75rem;
+  cursor: pointer;
+  transition: background-color 0.15s;
+}
+
+.game-replay-btn:hover {
+  background-color: #facc15;
+}
+
+/* ── Arena personaggi ── */
+.game-arena {
+  display: flex;
+  width: 100%;
+  justify-content: space-between;
+  align-items: center;
+  flex: 1;
+  gap: 1rem;
+}
+
+/* ── Log di battaglia ── */
+.game-log {
+  color: #9ca3af;
+  font-style: italic;
+  font-size: 0.875rem;
+  margin: 1rem 0;
+  text-align: center;
+  min-height: 1.5rem;
+}
+
+/* ── Bottoni azione ── */
+.game-actions {
+  display: flex;
+  gap: 1rem;
+  margin-bottom: 2rem;
+}
+
+.btn {
+  padding: 0.75rem 1.5rem;
+  color: #fff;
+  font-weight: 700;
+  border: none;
+  border-radius: 0.75rem;
+  cursor: pointer;
+  transition: background-color 0.15s;
+}
+
+.btn:disabled {
+  opacity: 0.4;
+  cursor: not-allowed;
+}
+
+.btn-attack {
+  background-color: #dc2626;
+}
+
+.btn-attack:hover:not(:disabled) {
+  background-color: #ef4444;
+}
+
+.btn-defend {
+  background-color: #2563eb;
+}
+
+.btn-defend:hover:not(:disabled) {
+  background-color: #3b82f6;
+}
+
+.btn-heal {
+  background-color: #16a34a;
+}
+
+.btn-heal:hover:not(:disabled) {
+  background-color: #22c55e;
+}
