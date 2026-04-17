@@ -8,6 +8,9 @@
   min-height: 100vh;
   background-color: #111827;
   padding: 1rem;
+  background-image: url("../../public/images/backgorund-arena.png");
+  background-size: cover;
+  background-position: center;
 }
 
 /* ── Overlay game over ── */

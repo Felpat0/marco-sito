@@ -27,15 +27,7 @@
     margin-bottom: 1rem;
     width: 50%;
 }
-.name {
-    position: absolute;
-    top: -15px;
-    font-size: 1.25rem;
-    font-weight: 700;
-    margin-bottom: 0.5rem;
-    color: #000;
-    text-shadow: -1px -1px 0 #fff, 1px -1px 0 #fff, -1px 1px 0 #fff, 1px 1px 0 #fff;
-}
+
 
 .message{
     border-radius: 1rem;
@@ -44,6 +36,17 @@
     margin: 10%;
     position: relative;
 }
+
+.name {
+    position: absolute;
+    top: -30px;
+    font-size: 1.25rem;
+    font-weight: 700;
+    margin-bottom: 0.5rem;
+    color: #000;
+    text-shadow: -1px -1px 0 #fff, 1px -1px 0 #fff, -1px 1px 0 #fff, 1px 1px 0 #fff;
+}
+
 .messageArrow{
     position: absolute;
     top: 100%;

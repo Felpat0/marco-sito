@@ -79,7 +79,7 @@ export default function GamePage() {
       {/* Bottoni azione */}
       <div className={styles["game-actions"]}>
         <button
-          onClick={() => attack(10)}
+          onClick={() => attack(1000)}
           disabled={!isPlayerTurn || gameEnd !== null}
           className={`${styles["btn"]} ${styles["btn-attack"]}`}
         >

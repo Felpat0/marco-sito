@@ -1,6 +1,6 @@
 .aura {
   position: absolute;
-  inset: -10%;
+  inset: -40%;
   border-radius: 50%;
   background: radial-gradient(
     circle,
@@ -14,7 +14,7 @@
 
 .cross {
   position: absolute;
-  bottom: 30%;
+  bottom: 20%;
   font-size: 0.9rem;
   color: #3dff7e;
   text-shadow: 0 0 6px rgba(0, 255, 100, 0.8);
