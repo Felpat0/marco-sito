@@ -39,7 +39,7 @@ export const getCardStyles: (args: CardStylesArguments) => StyleStructure = ({
     },
     hover: {
       position: "absolute",
-      transform: `rotate(0deg) scale(1.5)`,
+      transform: `rotate(0deg) scale(2)`,
       transition: "transform 0.3s ease",
       zIndex: 100,
       top: touchPosition?.top - initialPositionOffset?.top,
@@ -49,12 +49,46 @@ export const getCardStyles: (args: CardStylesArguments) => StyleStructure = ({
   },
   cardName: {
     base: {
-      fontSize: "1rem",
+      fontSize: ".6rem",
       fontWeight: "bold",
-      textAlign: "start",
+      margin: 0,
+      textAlign: "center",
       color: "#000",
       textShadow:
-        "-1px -1px 0 #fff, 1px -1px 0 #fff,-1px 1px 0 #fff,1px 1px 0 #fff",
+        "-.6px -.6px 0 #fff, .6px -.6px 0 #fff,-.6px .6px 0 #fff,.6px .6px 0 #fff",
+    },
+  },
+  cardPower: {
+    base: {
+      position: "absolute",
+      display: "flex",
+      flexDirection: "column",
+      alignItems: "center",
+      justifyContent: "center",
+      top: "5px",
+      left: "5px",
+    },
+  },
+  cardPowerText: {
+    base: {
+      fontSize: ".7rem",
+      lineHeight: ".7rem",
+      zIndex: 5,
+      fontWeight: "bold",
+      textAlign: "center",
+      color: "#000",
+      textShadow:
+        "-.6px -.6px 0 #fff, .6px -.6px 0 #fff,-.6px .6px 0 #fff,.6px .6px 0 #fff",
+    },
+  },
+  cardPowerIconContainer: {
+    base: {
+      display: "flex",
+      alignItems: "center",
+      justifyContent: "center",
+      borderRadius: "50%",
+      width: "20px",
+      height: "20px",
     },
   },
 });

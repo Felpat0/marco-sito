@@ -91,10 +91,12 @@ export default function GamePage() {
               </div>
             </div>
           )}
-          {/* Log turno */}
-          <div className={styles["game-log"]}>{log}</div>
-          {/* Bottoni azione */}
-          {/* <div className={styles["game-actions"]}>
+        </div>
+
+        {/* Log turno */}
+        <div className={styles["game-log"]}>{log}</div>
+        {/* Bottoni azione */}
+        {/* <div className={styles["game-actions"]}>
         <button
           onClick={() => attack(1000)}
           disabled={!isPlayerTurn || gameEnd !== null}
@@ -117,7 +119,6 @@ export default function GamePage() {
           💊 Cura
         </button>
       </div> */}
-        </div>
       </div>
       <div className={styles["hand-container"]}>
         <BottomUI />

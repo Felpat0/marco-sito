@@ -4,6 +4,8 @@ import { getCardStyles } from "./style";
 import { useCallback, useEffect, useRef, useState } from "react";
 import { onCardTouchMove } from "./utils";
 import { CardType } from "@/features/cardsManagement/types";
+import { RiShieldFill, RiSwordFill } from "react-icons/ri";
+import { BiPlusMedical } from "react-icons/bi";
 
 export type CardProps = CardType & {
   index?: number;
@@ -84,38 +86,58 @@ export const Card = ({
     };
   }, [handleRelease, handleTouchStart, handleTouchMove]);
 
+  const cardStyles = getCardStyles({
+    index,
+    cardsNumber,
+    isHovered,
+    touchPosition,
+    initialPositionOffset,
+    imageUrl,
+  });
   return (
     <div
       ref={cardContainerRef}
       className="card"
       style={{
-        ...getStyleFromStructure(
-          getCardStyles({
-            index,
-            cardsNumber,
-            isHovered,
-            touchPosition,
-            initialPositionOffset,
-            imageUrl,
-          }),
-          "cardContainer",
-          isHovered
-        ),
+        ...getStyleFromStructure(cardStyles, "cardContainer", isHovered),
       }}
     >
-      <h3
-        style={getStyleFromStructure(
-          getCardStyles({
-            index,
-            cardsNumber,
-            isHovered,
-            touchPosition,
-            initialPositionOffset,
-          }),
-          "cardName",
-          isHovered
-        )}
+      <div
+        style={{ ...getStyleFromStructure(cardStyles, "cardPower", isHovered) }}
       >
+        <div
+          style={{
+            ...getStyleFromStructure(
+              cardStyles,
+              "cardPowerIconContainer",
+              isHovered
+            ),
+          }}
+        >
+          {type === "attack" && (
+            <RiSwordFill color="red" stroke={"white"} strokeWidth={"1px"} />
+          )}
+          {type === "defend" && (
+            <RiShieldFill
+              color="#2563eb"
+              style={{ paddingTop: ".5px" }}
+              stroke={"white"}
+              strokeWidth={"2px"}
+            />
+          )}
+          {type === "heal" && (
+            <BiPlusMedical color="green" stroke={"white"} strokeWidth={"1px"} />
+          )}
+        </div>
+        <div
+          style={{
+            ...getStyleFromStructure(cardStyles, "cardPowerText", isHovered),
+          }}
+        >
+          {power}
+        </div>
+      </div>
+      <h3 style={getStyleFromStructure(cardStyles, "cardName", isHovered)}>
         {name}
       </h3>
       {/* <span className="type">{type}</span>
