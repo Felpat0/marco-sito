@@ -5,12 +5,12 @@ import { Sidebar } from "./Sidebar";
 import { MainGrid } from "./MainGrid";
 import { CompositeModal } from "./CompositeModal";
 import { OVAL_IMAGES, MAIN_IMAGES } from "@/lib/imageData";
-import type { OvalImage, MainImage } from "@/lib/imageData";
+import type { FaceImage, MainImage } from "@/lib/imageData";
 import styles from "./style/ComposePage.module.css";
 
 interface ModalState {
   mainImage: MainImage;
-  ovalImage: OvalImage;
+  faceImage: FaceImage;
 }
 
 export function ComposePage() {
@@ -21,10 +21,10 @@ export function ComposePage() {
   // Quando entrambi sono selezionati, apre la modale e resetta le selezioni
   useEffect(() => {
     if (!selectedOvalId || !selectedMainId) return;
-    const ovalImage = OVAL_IMAGES.find((o) => o.id === selectedOvalId);
+    const faceImage = OVAL_IMAGES.find((o) => o.id === selectedOvalId);
     const mainImage = MAIN_IMAGES.find((m) => m.id === selectedMainId);
-    if (!ovalImage || !mainImage) return;
-    setModalState({ mainImage, ovalImage });
+    if (!faceImage || !mainImage) return;
+    setModalState({ mainImage, faceImage });
     setSelectedOvalId(null);
     setSelectedMainId(null);
   }, [selectedOvalId, selectedMainId]);
@@ -56,7 +56,7 @@ export function ComposePage() {
       {modalState && (
         <CompositeModal
           mainImage={modalState.mainImage}
-          ovalImage={modalState.ovalImage}
+          faceImage={modalState.faceImage}
           onClose={handleCloseModal}
         />
       )}

@@ -10,6 +10,13 @@
   backdrop-filter: blur(2px);
 }
 
+.title {
+  padding: 0 2rem;
+  color: #fff;
+  font-size: 21px;
+  font-weight: 800;
+}
+
 .modal {
   background: #1f2937;
   border-radius: 14px;
@@ -28,6 +35,9 @@
   border-bottom: 1px solid #374151;
   background: #111827;
   flex-shrink: 0;
+
+  display: flex;
+  justify-content: space-between;
 }
 
 .actions {

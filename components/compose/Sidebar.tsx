@@ -1,9 +1,9 @@
 import { OvalItem } from "./OvalItem";
-import type { OvalImage } from "@/lib/imageData";
+import type { FaceImage } from "@/lib/imageData";
 import styles from "./style/Sidebar.module.css";
 
 interface Props {
-  ovals: OvalImage[];
+  ovals: FaceImage[];
   selectedOvalId: string | null;
   onSelect: (ovalId: string) => void;
 }
@@ -11,7 +11,6 @@ interface Props {
 export function Sidebar({ ovals, selectedOvalId, onSelect }: Props) {
   return (
     <aside className={styles.sidebar} aria-label="Sticker panel">
-      <h2 className={styles.title}>Stickers</h2>
       <ul className={styles.list} role="list">
         {ovals.map((oval) => (
           <li key={oval.id}>

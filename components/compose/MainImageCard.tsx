@@ -16,7 +16,8 @@ export function MainImageCard({ image, isSelected, onSelect }: Props) {
       tabIndex={0}
       aria-pressed={isSelected}
       aria-label={`Seleziona ${image.alt}`}
-      onKeyDown={(e) => e.key === "Enter" && onSelect(image.id)}>
+      onKeyDown={(e) => e.key === "Enter" && onSelect(image.id)}
+    >
       {/* eslint-disable-next-line @next/next/no-img-element */}
       <img
         src={image.src}
