@@ -57,37 +57,6 @@
   gap: 1rem;
 }
 
-.character {
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  gap: 0.5rem;
-  width: 50%;
-  z-index: 2;
-}
-
-.character-name {
-  color: #fff;
-  font-weight: 600;
-  font-size: 1.125rem;
-}
-
-/* ── Immagini personaggi ── */
-.character-img {
-  width: 10rem;
-  height: 10rem;
-  object-fit: contain;
-}
-
-.character-img--player {
-  filter: drop-shadow(0 0 15px rgba(0, 200, 100, 0.6));
-}
-
-.character-img--monster {
-  filter: drop-shadow(0 0 15px rgba(200, 0, 0, 0.6));
-  /* transform: scaleX(-1); TODO: da capire se serve con le immagini reali*/
-}
-
 /* ── Log di battaglia ── */
 .game-log {
   color: #9ca3af;

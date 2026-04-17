@@ -6,6 +6,7 @@ import styles from "./style.module.css";
 import WinCard from "@/components/winCard/WinCard";
 import HpBar from "@/components/hpBar/HpBar";
 import { BottomUI } from "@/components/gameplay-ui/BottomUI";
+import Character from "@/components/character/Character";
 
 export default function GamePage() {
   const {
@@ -18,6 +19,8 @@ export default function GamePage() {
     isPlayerTurn,
     gameEnd,
     log,
+    playerAnimation,
+    enemyAnimation,
   } = useGame();
 
   useEffect(() => {
@@ -25,17 +28,52 @@ export default function GamePage() {
   }, []);
 
   return (
-    <div className={styles["game-container"]}>
-      <div className={styles["game-page"]}>
-        {gameEnd === GameEnd.LOSE && (
-          <div className={styles["game-overlay"]}>
-            <div className={styles["game-overlay-content"]}>
-              <h2 className={styles["game-over-title"]}>💀 Hai perso!</h2>
-              <button onClick={startGame} className={styles["game-replay-btn"]}>
-                Riprova
-              </button>
-            </div>
+    <div className={styles["game-page"]}>
+      {gameEnd === GameEnd.LOSE && (
+        <div className={styles["game-overlay"]}>
+          <div className={styles["game-overlay-content"]}>
+            <h2 className={styles["game-over-title"]}>💀 Hai perso!</h2>
+            <button onClick={startGame} className={styles["game-replay-btn"]}>
+              Riprova
+            </button>
           </div>
+        </div>
+      )}
+      {gameEnd === GameEnd.WIN && <WinCard />}
+      {gameEnd === GameEnd.ENDGAME && (
+        <div className={styles["game-overlay"]}>
+          <div className={styles["game-overlay-content"]}>
+            <h2 className={styles["game-over-title"]}>
+              🏆 Hai vinto! Hai sconfitto tutti i nemici!
+            </h2>
+            <button onClick={startGame} className={styles["game-replay-btn"]}>
+              Ricomincia
+            </button>
+          </div>
+        </div>
+      )}
+      {/* Sezione personaggi */}
+      <div className={styles["game-arena"]}>
+        {/* Personaggio giocatore */}
+        <Character
+          name={player.name}
+          hp={player.hp}
+          maxHp={player.maxHp}
+          image={player.image}
+          variant="player"
+          animation={playerAnimation}
+        />
+
+        {/* Mostro avversario */}
+        {enemy && (
+          <Character
+            name={enemy.name}
+            hp={enemy.hp}
+            maxHp={enemy.maxHp}
+            image={enemy.image}
+            variant="monster"
+            animation={enemyAnimation}
+          />
         )}
         {gameEnd === GameEnd.WIN && <WinCard />}
         {gameEnd === GameEnd.ENDGAME && (

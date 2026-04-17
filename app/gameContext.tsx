@@ -1,6 +1,6 @@
 "use client";
 
-import React, { createContext, useContext, useState, useEffect } from "react";
+import React, { createContext, useContext, useState } from "react";
 import {
   Character,
   Enemy,
@@ -35,9 +35,11 @@ export function getRandomEnemyMove(): EnemyMove {
   return moves[idx];
 }
 
+type AnimationType = "damage" | "heal" | "defend" | null;
+
 interface GameContextType {
   player: Character;
-  enemy: Character;
+  enemy: Enemy;
   nextEnemy: () => void;
   startGame: () => void;
   setupPlayer: (image: string, name: string) => void;
@@ -48,6 +50,32 @@ interface GameContextType {
   gameEnd: GameEnd | null;
   log: string;
   enemyNextMove: EnemyMove;
+  enemyNextMoveValue: number;
+  playerAnimation: AnimationType;
+  enemyAnimation: AnimationType;
+  clearAnimations: () => void;
+}
+
+function calcMoveValue(move: EnemyMove, enemy: Enemy): number {
+  switch (move) {
+    case EnemyMove.ATTACK:
+      return randomInt(
+        Math.floor(enemy.attack * (1 - RANDOM_FACTOR)),
+        Math.ceil(enemy.attack * (1 + RANDOM_FACTOR))
+      );
+    case EnemyMove.DEFEND:
+      return randomInt(
+        Math.floor(enemy.defense * (1 - RANDOM_FACTOR)),
+        Math.ceil(enemy.defense * (1 + RANDOM_FACTOR))
+      );
+    case EnemyMove.HEAL:
+      return randomInt(
+        Math.floor(enemy.heal * (1 - RANDOM_FACTOR)),
+        Math.ceil(enemy.heal * (1 + RANDOM_FACTOR))
+      );
+    default:
+      return 0;
+  }
 }
 //TODO: DA rimuovere e sostuituire con parte di chiara
 export const PLAYER_INIT: Character = {
@@ -71,6 +99,15 @@ export function GameProvider({ children }: { children: React.ReactNode }) {
   const [log, setLog] = useState("⚔️ La battaglia è iniziata!");
 
   const [enemyNextMove, setEnemyNextMove] = useState<EnemyMove>(EnemyMove.IDLE);
+  const [enemyNextMoveValue, setEnemyNextMoveValue] = useState<number>(0);
+
+  const [playerAnimation, setPlayerAnimation] = useState<AnimationType>(null);
+  const [enemyAnimation, setEnemyAnimation] = useState<AnimationType>(null);
+
+  const clearAnimations = () => {
+    setPlayerAnimation(null);
+    setEnemyAnimation(null);
+  };
 
   // Setup marco
   const setupPlayer = (image: string, name: string) => {
@@ -83,41 +120,35 @@ export function GameProvider({ children }: { children: React.ReactNode }) {
     setTimeout(() => {
       let newHp = currentPlayerHp;
       let logMsg = "";
-      let healed = 0;
       const enemy = enemies[0];
       if (!enemy) return;
+      const val = enemyNextMoveValue;
       switch (enemyNextMove) {
         case EnemyMove.ATTACK: {
-          const min = Math.floor(enemy.attack * (1 - RANDOM_FACTOR));
-          const max = Math.ceil(enemy.attack * (1 + RANDOM_FACTOR));
-          const dmg = randomInt(min, max);
-          const finalDmg = Math.max(0, dmg - (defending || 0));
+          const finalDmg = Math.max(0, val - (defending || 0));
           newHp = Math.max(0, currentPlayerHp - finalDmg);
           logMsg = defending
-            ? `🛡️ Hai bloccato ${Math.min(defending, dmg)} danni!`
-            : `👾 Il nemico ti attacca per ${dmg} danni!`;
+            ? `🛡️ Hai bloccato ${Math.min(defending, val)} danni!`
+            : `👾 Il nemico ti attacca per ${val} danni!`;
+          setPlayerAnimation("damage");
           break;
         }
         case EnemyMove.DEFEND: {
-          const min = Math.floor(enemy.defense * (1 - RANDOM_FACTOR));
-          const max = Math.ceil(enemy.defense * (1 + RANDOM_FACTOR));
-          const def = randomInt(min, max);
-          logMsg = `🛡️ Il nemico si difende! (difesa ${def})`;
+          logMsg = `🛡️ Il nemico si difende! (difesa ${val})`;
+          setEnemyAnimation("defend");
           break;
         }
         case EnemyMove.HEAL: {
-          const min = Math.floor(enemy.heal * (1 - RANDOM_FACTOR));
-          const max = Math.ceil(enemy.heal * (1 + RANDOM_FACTOR));
-          healed = randomInt(min, max);
           setEnemies((prev) => {
             const arr = [...prev];
             arr[0] = {
               ...arr[0],
-              hp: Math.min(arr[0].maxHp, arr[0].hp + healed),
+              hp: Math.min(arr[0].maxHp, arr[0].hp + val),
             };
             return arr;
           });
-          logMsg = `💊 Il nemico si cura di ${healed} HP!`;
+          logMsg = `💊 Il nemico si cura di ${val} HP!`;
+          setEnemyAnimation("heal");
           break;
         }
         default:
@@ -131,7 +162,9 @@ export function GameProvider({ children }: { children: React.ReactNode }) {
         setLog("💀 Il nemico ti ha sconfitto!");
       } else {
         setIsPlayerTurn(true);
-        setEnemyNextMove(getRandomEnemyMove());
+        const nextMove = getRandomEnemyMove();
+        setEnemyNextMove(nextMove);
+        setEnemyNextMoveValue(calcMoveValue(nextMove, enemy));
         setLog(logMsg);
       }
     }, 1200);
@@ -148,17 +181,20 @@ export function GameProvider({ children }: { children: React.ReactNode }) {
       return;
     }
 
+    const nextMove = getRandomEnemyMove();
     setGameEnd(null);
     setEnemies(enemiesTemp);
-    setEnemyNextMove(getRandomEnemyMove());
+    setEnemyNextMove(nextMove);
+    setEnemyNextMoveValue(calcMoveValue(nextMove, enemiesTemp[0]));
   };
 
   const startGame = () => {
-    setPlayer(PLAYER_INIT);
-
-    setEnemies(setupEnemyPool());
-    setEnemyNextMove(getRandomEnemyMove());
-
+    // setPlayer(PLAYER_INIT);
+    const pool = setupEnemyPool();
+    const nextMove = getRandomEnemyMove();
+    setEnemies(pool);
+    setEnemyNextMove(nextMove);
+    setEnemyNextMoveValue(calcMoveValue(nextMove, pool[0]));
     setGameEnd(null);
     setLog("⚔️ La battaglia è iniziata!");
   };
@@ -177,12 +213,14 @@ export function GameProvider({ children }: { children: React.ReactNode }) {
       return;
     }
     setLog(`⚔️ Attacchi per ${dmg} danni!`);
+    setEnemyAnimation("damage");
     doEnemyAction(player.hp);
   };
 
   const defend = (value: number) => {
     if (!isPlayerTurn || gameEnd) return;
     setLog("🛡️ Ti metti in posizione difensiva...");
+    setPlayerAnimation("defend");
     doEnemyAction(player.hp, value);
   };
 
@@ -194,7 +232,7 @@ export function GameProvider({ children }: { children: React.ReactNode }) {
 
     const actual = newHp - player.hp;
     setLog(`💊 Recuperi ${actual} HP!`);
-
+    setPlayerAnimation("heal");
     doEnemyAction(newHp);
   };
 
@@ -204,6 +242,7 @@ export function GameProvider({ children }: { children: React.ReactNode }) {
         player,
         enemy: enemies[0],
         enemyNextMove,
+        enemyNextMoveValue,
         nextEnemy,
         startGame,
         setupPlayer,
@@ -213,6 +252,9 @@ export function GameProvider({ children }: { children: React.ReactNode }) {
         isPlayerTurn,
         gameEnd,
         log,
+        playerAnimation,
+        enemyAnimation,
+        clearAnimations,
       }}
     >
       {children}

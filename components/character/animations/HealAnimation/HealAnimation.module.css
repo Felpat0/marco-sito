@@ -1,0 +1,24 @@
+.aura {
+  position: absolute;
+  inset: -10%;
+  border-radius: 50%;
+  background: radial-gradient(
+    circle,
+    rgba(0, 220, 80, 0.35) 0%,
+    rgba(0, 200, 60, 0.15) 50%,
+    transparent 75%
+  );
+  pointer-events: none;
+  z-index: 5;
+}
+
+.cross {
+  position: absolute;
+  bottom: 30%;
+  font-size: 0.9rem;
+  color: #3dff7e;
+  text-shadow: 0 0 6px rgba(0, 255, 100, 0.8);
+  pointer-events: none;
+  z-index: 10;
+  user-select: none;
+}
