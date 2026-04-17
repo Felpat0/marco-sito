@@ -2,7 +2,8 @@
   flex: 1;
   display: flex;
   flex-wrap: wrap;
-  gap: 16px;
+  justify-content: space-evenly;
+  gap:16px;
   padding: 24px;
   align-content: start;
   overflow-y: auto;

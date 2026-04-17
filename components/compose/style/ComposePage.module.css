@@ -12,7 +12,6 @@
 @media (max-width: 640px) {
   .layout {
     flex-direction: column;
-    height: auto;
     min-height: 100vh;
     overflow: auto;
   }
