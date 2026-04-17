@@ -18,14 +18,6 @@ interface CharacterProps {
   animation?: AnimationType;
 }
 
-const shakeVariants = {
-  damage: {
-    x: [-8, 8, -6, 6, -3, 3, 0],
-    transition: { duration: 0.5, ease: "easeOut" },
-  },
-  idle: { x: 0 },
-};
-
 export default function Character({
   name,
   hp,
@@ -41,7 +33,13 @@ export default function Character({
       <div className={styles["character-img-wrapper"]}>
         <motion.div
           animate={animation === "damage" ? "damage" : "idle"}
-          variants={shakeVariants}
+          variants={{
+            damage: {
+              x: [-8, 8, -6, 6, -3, 3, 0],
+              transition: { duration: 0.5, ease: "easeOut" },
+            },
+            idle: { x: 0 },
+          }}
         >
           <img
             src={image}

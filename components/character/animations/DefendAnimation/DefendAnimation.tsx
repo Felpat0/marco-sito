@@ -3,6 +3,7 @@ import React from "react";
 import { motion } from "framer-motion";
 import styles from "./DefendAnimation.module.css";
 import { useGame } from "@/app/gameContext";
+import { RiShieldFill } from "react-icons/ri";
 
 interface Props {
   onComplete?: () => void;
@@ -32,7 +33,7 @@ export default function DefendAnimation({ onComplete }: Props) {
         exit={{ opacity: 0, scale: 0.3 }}
         transition={{ duration: 0.8, ease: "easeOut" }}
       >
-        🛡️
+        <RiShieldFill style={{ width: "80%", height: "80%" }} color="#2563eb" />
       </motion.div>
     </>
   );
