@@ -13,7 +13,6 @@ export const handStyles: StyleStructure = {
       gap: "0px",
       paddingTop: "70px",
       paddingBottom: "5px",
-      backgroundColor: "rgba(0, 0, 0, 0.2)",
     },
   },
 };

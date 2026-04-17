@@ -5,6 +5,7 @@ import { GameEnd, useGame } from "../gameContext";
 import styles from "./style.module.css";
 import WinCard from "@/components/winCard/WinCard";
 import HpBar from "@/components/hpBar/HpBar";
+import { BottomUI } from "@/components/gameplay-ui/BottomUI";
 
 export default function GamePage() {
   const {
@@ -24,60 +25,61 @@ export default function GamePage() {
   }, []);
 
   return (
-    <div className={styles["game-page"]}>
-      {gameEnd === GameEnd.LOSE && (
-        <div className={styles["game-overlay"]}>
-          <div className={styles["game-overlay-content"]}>
-            <h2 className={styles["game-over-title"]}>💀 Hai perso!</h2>
-            <button onClick={startGame} className={styles["game-replay-btn"]}>
-              Riprova
-            </button>
-          </div>
-        </div>
-      )}
-      {gameEnd === GameEnd.WIN && <WinCard />}
-      {gameEnd === GameEnd.ENDGAME && (
-        <div className={styles["game-overlay"]}>
-          <div className={styles["game-overlay-content"]}>
-            <h2 className={styles["game-over-title"]}>
-              🏆 Hai vinto! Hai sconfitto tutti i nemici!
-            </h2>
-            <button onClick={startGame} className={styles["game-replay-btn"]}>
-              Ricomincia
-            </button>
-          </div>
-        </div>
-      )}
-      {/* Sezione personaggi */}
-      <div className={styles["game-arena"]}>
-        {/* Personaggio giocatore */}
-        <div className={styles["character"]}>
-          <span className={styles["character-name"]}>{player.name}</span>
-          <HpBar hp={player.hp} maxHp={player.maxHp} variant="player" />
-          <img
-            src={player.image}
-            alt={player.name}
-            className={`${styles["character-img"]} ${styles["character-img--player"]}`}
-          />
-        </div>
-
-        {/* Mostro avversario */}
-        {enemy && (
-          <div className={styles["character"]}>
-            <span className={styles["character-name"]}>{enemy.name}</span>
-            <HpBar hp={enemy.hp} maxHp={enemy.maxHp} variant="monster" />
-            <img
-              src={enemy.image}
-              alt={enemy.name}
-              className={`${styles["character-img"]} ${styles["character-img--monster"]}`}
-            />
+    <div className={styles["game-container"]}>
+      <div className={styles["game-page"]}>
+        {gameEnd === GameEnd.LOSE && (
+          <div className={styles["game-overlay"]}>
+            <div className={styles["game-overlay-content"]}>
+              <h2 className={styles["game-over-title"]}>💀 Hai perso!</h2>
+              <button onClick={startGame} className={styles["game-replay-btn"]}>
+                Riprova
+              </button>
+            </div>
           </div>
         )}
-      </div>
-      {/* Log turno */}
-      <div className={styles["game-log"]}>{log}</div>
-      {/* Bottoni azione */}
-      <div className={styles["game-actions"]}>
+        {gameEnd === GameEnd.WIN && <WinCard />}
+        {gameEnd === GameEnd.ENDGAME && (
+          <div className={styles["game-overlay"]}>
+            <div className={styles["game-overlay-content"]}>
+              <h2 className={styles["game-over-title"]}>
+                🏆 Hai vinto! Hai sconfitto tutti i nemici!
+              </h2>
+              <button onClick={startGame} className={styles["game-replay-btn"]}>
+                Ricomincia
+              </button>
+            </div>
+          </div>
+        )}
+        {/* Sezione personaggi */}
+        <div className={styles["game-arena"]}>
+          {/* Personaggio giocatore */}
+          <div className={styles["character"]}>
+            <span className={styles["character-name"]}>{player.name}</span>
+            <HpBar hp={player.hp} maxHp={player.maxHp} variant="player" />
+            <img
+              src={player.image}
+              alt={player.name}
+              className={`${styles["character-img"]} ${styles["character-img--player"]}`}
+            />
+          </div>
+
+          {/* Mostro avversario */}
+          {enemy && (
+            <div className={styles["character"]}>
+              <span className={styles["character-name"]}>{enemy.name}</span>
+              <HpBar hp={enemy.hp} maxHp={enemy.maxHp} variant="monster" />
+              <img
+                src={enemy.image}
+                alt={enemy.name}
+                className={`${styles["character-img"]} ${styles["character-img--monster"]}`}
+              />
+            </div>
+          )}
+        </div>
+        {/* Log turno */}
+        <div className={styles["game-log"]}>{log}</div>
+        {/* Bottoni azione */}
+        {/* <div className={styles["game-actions"]}>
         <button
           onClick={() => attack(10)}
           disabled={!isPlayerTurn || gameEnd !== null}
@@ -99,6 +101,10 @@ export default function GamePage() {
         >
           💊 Cura
         </button>
+      </div> */}
+      </div>
+      <div className={styles["hand-container"]}>
+        <BottomUI />
       </div>
     </div>
   );

@@ -63,6 +63,7 @@
   align-items: center;
   gap: 0.5rem;
   width: 50%;
+  z-index: 2;
 }
 
 .character-name {
@@ -95,6 +96,15 @@
   margin: 1rem 0;
   text-align: center;
   min-height: 1.5rem;
+}
+
+/* ── Mano ── */
+.hand-container {
+  position: absolute;
+  width: 100%;
+  bottom: -10px;
+  background-color: rgba(0, 0, 0, 0.2);
+  z-index: 0;
 }
 
 /* ── Bottoni azione ── */
