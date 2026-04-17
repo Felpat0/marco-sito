@@ -2,7 +2,7 @@ import { createContext, useCallback, useState } from "react";
 import { CardsContextType, CardType } from "./types";
 import { generateDeck } from "./deck";
 
-const HAND_SIZE = 5;
+const HAND_SIZE = 3;
 
 export const CardsContext = createContext<CardsContextType>({
   deck: [],
@@ -27,13 +27,15 @@ export const CardsProvider = ({ children }: { children: React.ReactNode }) => {
   );
 
   const refreshDeck = useCallback(
-    (currentHand?: CardType[]): CardType[] => {
+    (currentHand?: CardType[], updateState: boolean = true): CardType[] => {
       const newDeck = generateDeck();
       const handCardsIds = currentHand
         ? currentHand.map((card) => card.id)
         : hand.map((card) => card.id);
 
-      setDeck(newDeck.filter((card) => !handCardsIds.includes(card.id)));
+      if (updateState) {
+        setDeck(newDeck.filter((card) => !handCardsIds.includes(card.id)));
+      }
       return newDeck.filter((card) => !handCardsIds.includes(card.id));
     },
     [hand]
@@ -49,10 +51,8 @@ export const CardsProvider = ({ children }: { children: React.ReactNode }) => {
       }
 
       for (let i = 0; i < count; i++) {
-        deckToDrawFrom = deck;
-
         if (!deckToDrawFrom.length) {
-          deckToDrawFrom = refreshDeck(handToDrawTo);
+          deckToDrawFrom = refreshDeck(handToDrawTo, false);
         }
 
         if (!deckToDrawFrom.length) {
@@ -65,7 +65,7 @@ export const CardsProvider = ({ children }: { children: React.ReactNode }) => {
         handToDrawTo = [...handToDrawTo, cardToDraw];
 
         if (deckToDrawFrom.slice(1).length === 0) {
-          refreshDeck(handToDrawTo);
+          refreshDeck(handToDrawTo, false);
         }
       }
       setDeck(deckToDrawFrom);
@@ -75,6 +75,7 @@ export const CardsProvider = ({ children }: { children: React.ReactNode }) => {
   );
 
   const generateHand = useCallback(() => {
+    console.log("Generating hand...");
     drawCard(HAND_SIZE, true);
   }, [drawCard]);
 

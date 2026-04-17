@@ -13,7 +13,7 @@ export type CardType = {
   id: number;
   name: string;
   imageUrl: string;
-  type: "heal" | "attack" | "shield";
+  type: "heal" | "attack" | "defend";
   power: number;
 };
 

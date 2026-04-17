@@ -7,6 +7,7 @@ import {
   RANDOM_FACTOR,
   setupEnemyPool,
 } from "../utils/enemy";
+import { CardsContext } from "@/features/cardsManagement/CardsContext";
 
 const GameContext = createContext<GameContextType | null>(null);
 
@@ -104,6 +105,8 @@ export function GameProvider({ children }: { children: React.ReactNode }) {
   const [playerAnimation, setPlayerAnimation] = useState<AnimationType>(null);
   const [enemyAnimation, setEnemyAnimation] = useState<AnimationType>(null);
 
+  const { generateHand } = useContext(CardsContext);
+
   const clearAnimations = () => {
     setPlayerAnimation(null);
     setEnemyAnimation(null);
@@ -180,6 +183,7 @@ export function GameProvider({ children }: { children: React.ReactNode }) {
       setLog("🏆 Hai sconfitto tutti i nemici! Vittoria totale!");
       return;
     }
+    generateHand();
 
     const nextMove = getRandomEnemyMove();
     setGameEnd(null);
@@ -196,6 +200,7 @@ export function GameProvider({ children }: { children: React.ReactNode }) {
     setEnemyNextMove(nextMove);
     setEnemyNextMoveValue(calcMoveValue(nextMove, pool[0]));
     setGameEnd(null);
+    generateHand();
     setLog("⚔️ La battaglia è iniziata!");
   };
 

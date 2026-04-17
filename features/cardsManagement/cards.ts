@@ -1,16 +1,18 @@
-export const cards = [
+import { CardType } from "./types";
+
+export const cards: CardType[] = [
   {
     id: 1,
     name: "1Br br patapim",
     imageUrl: "/images/cards/brbrpatapim.jpg",
-    type: "heal",
-    power: 10,
+    type: "attack",
+    power: 1000,
   },
   {
     id: 2,
     name: "2Bruno bruno patapimo",
     imageUrl: "/images/cards/brbrpatapim.jpg",
-    type: "heal",
+    type: "defend",
     power: 10,
   },
   {
@@ -30,6 +32,13 @@ export const cards = [
   {
     id: 5,
     name: "5Bruno bruno patapimo",
+    imageUrl: "/images/cards/brbrpatapim.jpg",
+    type: "heal",
+    power: 10,
+  },
+  {
+    id: 6,
+    name: "6Bruno bruno patapimo",
     imageUrl: "/images/cards/brbrpatapim.jpg",
     type: "heal",
     power: 10,
