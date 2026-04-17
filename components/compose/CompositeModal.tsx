@@ -1,9 +1,11 @@
 "use client";
 
 import { useEffect, useRef, useState, useCallback } from "react";
+import { useRouter } from "next/navigation";
 import { useImageComposer } from "@/hooks/useImageComposer";
 import type { MainImage, OvalImage } from "@/lib/imageData";
 import styles from "./style/CompositeModal.module.css";
+import { useGame } from "@/app/gameContext";
 
 interface Props {
   mainImage: MainImage;
@@ -12,6 +14,8 @@ interface Props {
 }
 
 export function CompositeModal({ mainImage, ovalImage, onClose }: Props) {
+  const { setupPlayer } = useGame();
+  const router = useRouter();
   const { compose } = useImageComposer();
   const [compositeUrl, setCompositeUrl] = useState<string | null>(null);
   const [isLoading, setIsLoading] = useState(true);
@@ -30,7 +34,7 @@ export function CompositeModal({ mainImage, ovalImage, onClose }: Props) {
       ovalImage.src,
       mainImage.overlayAnchor,
       (ovalImage.zoom ?? 1.0) * (mainImage.faceZoomMultiplier ?? 1.0),
-      (mainImage.mainLayer ?? "avanti") === "avanti",
+      (mainImage.mainLayer ?? "avanti") === "avanti"
     )
       .then((url) => {
         if (!cancelled) {
@@ -41,7 +45,7 @@ export function CompositeModal({ mainImage, ovalImage, onClose }: Props) {
       .catch(() => {
         if (!cancelled) {
           setError(
-            "Impossibile comporre le immagini. Verifica i permessi CORS.",
+            "Impossibile comporre le immagini. Verifica i permessi CORS."
           );
           setIsLoading(false);
         }
@@ -65,7 +69,7 @@ export function CompositeModal({ mainImage, ovalImage, onClose }: Props) {
     (e: React.MouseEvent<HTMLDivElement>) => {
       if (e.target === backdropRef.current) onClose();
     },
-    [onClose],
+    [onClose]
   );
 
   const handleDownload = useCallback(() => {
@@ -76,9 +80,10 @@ export function CompositeModal({ mainImage, ovalImage, onClose }: Props) {
     a.click();
   }, [compositeUrl, mainImage.id, ovalImage.id]);
 
-  const handleStart = useCallback(() => {
-    console.log("Start!");
-  }, []);
+  const handleStart = () => {
+    setupPlayer(compositeUrl ?? mainImage.src, "TEST");
+    router.push("/game");
+  };
 
   return (
     <div
@@ -87,7 +92,8 @@ export function CompositeModal({ mainImage, ovalImage, onClose }: Props) {
       onClick={handleBackdropClick}
       role="dialog"
       aria-modal="true"
-      aria-label="Composizione immagine">
+      aria-label="Composizione immagine"
+    >
       <div className={styles.modal}>
         <header className={styles.header}>
           <div className={styles.actions}>
@@ -98,13 +104,15 @@ export function CompositeModal({ mainImage, ovalImage, onClose }: Props) {
               className={styles.btnDownload}
               onClick={handleDownload}
               disabled={!compositeUrl}
-              aria-disabled={!compositeUrl}>
+              aria-disabled={!compositeUrl}
+            >
               Download
             </button>
             <button
               className={styles.btnClose}
               onClick={onClose}
-              aria-label="Chiudi modale">
+              aria-label="Chiudi modale"
+            >
               ✕
             </button>
           </div>

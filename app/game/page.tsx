@@ -4,7 +4,7 @@ import { useEffect } from "react";
 import { GameEnd, useGame } from "../gameContext";
 import styles from "./style.module.css";
 import WinCard from "@/components/winCard/WinCard";
-import HpBar from "@/components/hpBar/HpBar";
+import Character from "@/components/character/Character";
 
 export default function GamePage() {
   const {
@@ -17,6 +17,8 @@ export default function GamePage() {
     isPlayerTurn,
     gameEnd,
     log,
+    playerAnimation,
+    enemyAnimation,
   } = useGame();
 
   useEffect(() => {
@@ -51,27 +53,25 @@ export default function GamePage() {
       {/* Sezione personaggi */}
       <div className={styles["game-arena"]}>
         {/* Personaggio giocatore */}
-        <div className={styles["character"]}>
-          <span className={styles["character-name"]}>{player.name}</span>
-          <HpBar hp={player.hp} maxHp={player.maxHp} variant="player" />
-          <img
-            src={player.image}
-            alt={player.name}
-            className={`${styles["character-img"]} ${styles["character-img--player"]}`}
-          />
-        </div>
+        <Character
+          name={player.name}
+          hp={player.hp}
+          maxHp={player.maxHp}
+          image={player.image}
+          variant="player"
+          animation={playerAnimation}
+        />
 
         {/* Mostro avversario */}
         {enemy && (
-          <div className={styles["character"]}>
-            <span className={styles["character-name"]}>{enemy.name}</span>
-            <HpBar hp={enemy.hp} maxHp={enemy.maxHp} variant="monster" />
-            <img
-              src={enemy.image}
-              alt={enemy.name}
-              className={`${styles["character-img"]} ${styles["character-img--monster"]}`}
-            />
-          </div>
+          <Character
+            name={enemy.name}
+            hp={enemy.hp}
+            maxHp={enemy.maxHp}
+            image={enemy.image}
+            variant="monster"
+            animation={enemyAnimation}
+          />
         )}
       </div>
       {/* Log turno */}

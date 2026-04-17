@@ -1,6 +1,6 @@
 "use client";
 
-import React, { createContext, useContext, useState, useEffect } from "react";
+import React, { createContext, useContext, useState } from "react";
 import {
   Character,
   Enemy,
@@ -35,9 +35,11 @@ export function getRandomEnemyMove(): EnemyMove {
   return moves[idx];
 }
 
+type AnimationType = "damage" | "heal" | "defend" | null;
+
 interface GameContextType {
   player: Character;
-  enemy: Character;
+  enemy: Enemy;
   nextEnemy: () => void;
   startGame: () => void;
   setupPlayer: (image: string, name: string) => void;
@@ -48,6 +50,9 @@ interface GameContextType {
   gameEnd: GameEnd | null;
   log: string;
   enemyNextMove: EnemyMove;
+  playerAnimation: AnimationType;
+  enemyAnimation: AnimationType;
+  clearAnimations: () => void;
 }
 //TODO: DA rimuovere e sostuituire con parte di chiara
 export const PLAYER_INIT: Character = {
@@ -71,6 +76,14 @@ export function GameProvider({ children }: { children: React.ReactNode }) {
   const [log, setLog] = useState("⚔️ La battaglia è iniziata!");
 
   const [enemyNextMove, setEnemyNextMove] = useState<EnemyMove>(EnemyMove.IDLE);
+
+  const [playerAnimation, setPlayerAnimation] = useState<AnimationType>(null);
+  const [enemyAnimation, setEnemyAnimation] = useState<AnimationType>(null);
+
+  const clearAnimations = () => {
+    setPlayerAnimation(null);
+    setEnemyAnimation(null);
+  };
 
   // Setup marco
   const setupPlayer = (image: string, name: string) => {
@@ -96,6 +109,7 @@ export function GameProvider({ children }: { children: React.ReactNode }) {
           logMsg = defending
             ? `🛡️ Hai bloccato ${Math.min(defending, dmg)} danni!`
             : `👾 Il nemico ti attacca per ${dmg} danni!`;
+          setPlayerAnimation("damage");
           break;
         }
         case EnemyMove.DEFEND: {
@@ -103,6 +117,7 @@ export function GameProvider({ children }: { children: React.ReactNode }) {
           const max = Math.ceil(enemy.defense * (1 + RANDOM_FACTOR));
           const def = randomInt(min, max);
           logMsg = `🛡️ Il nemico si difende! (difesa ${def})`;
+          setEnemyAnimation("defend");
           break;
         }
         case EnemyMove.HEAL: {
@@ -118,6 +133,7 @@ export function GameProvider({ children }: { children: React.ReactNode }) {
             return arr;
           });
           logMsg = `💊 Il nemico si cura di ${healed} HP!`;
+          setEnemyAnimation("heal");
           break;
         }
         default:
@@ -154,7 +170,7 @@ export function GameProvider({ children }: { children: React.ReactNode }) {
   };
 
   const startGame = () => {
-    setPlayer(PLAYER_INIT);
+    // setPlayer(PLAYER_INIT);
 
     setEnemies(setupEnemyPool());
     setEnemyNextMove(getRandomEnemyMove());
@@ -177,12 +193,14 @@ export function GameProvider({ children }: { children: React.ReactNode }) {
       return;
     }
     setLog(`⚔️ Attacchi per ${dmg} danni!`);
+    setEnemyAnimation("damage");
     doEnemyAction(player.hp);
   };
 
   const defend = (value: number) => {
     if (!isPlayerTurn || gameEnd) return;
     setLog("🛡️ Ti metti in posizione difensiva...");
+    setPlayerAnimation("defend");
     doEnemyAction(player.hp, value);
   };
 
@@ -194,7 +212,7 @@ export function GameProvider({ children }: { children: React.ReactNode }) {
 
     const actual = newHp - player.hp;
     setLog(`💊 Recuperi ${actual} HP!`);
-
+    setPlayerAnimation("heal");
     doEnemyAction(newHp);
   };
 
@@ -213,6 +231,9 @@ export function GameProvider({ children }: { children: React.ReactNode }) {
         isPlayerTurn,
         gameEnd,
         log,
+        playerAnimation,
+        enemyAnimation,
+        clearAnimations,
       }}
     >
       {children}
