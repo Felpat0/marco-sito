@@ -321,8 +321,60 @@ export default function Home() {
           .review-7 { top: 50vw; left: 12vw; transform: rotate(-5deg); }
         }
       `}</style>
-      <div onClick={() => router.push("/ui-cards-management-test")}>
-        Go to game
+
+      <div className="scene">
+        <div className="bg-glow" />
+
+        {/* Bokeh blobs */}
+        {[
+          { top: "15%", left: "10%", w: 180, color: "rgba(60,100,200,0.08)" },
+          { top: "60%", left: "75%", w: 220, color: "rgba(80,120,220,0.06)" },
+          { top: "30%", left: "85%", w: 130, color: "rgba(120,160,255,0.05)" },
+          { top: "70%", left: "20%", w: 160, color: "rgba(40,80,180,0.07)" },
+        ].map((b, i) => (
+          <div
+            key={i}
+            className="bokeh"
+            style={{
+              top: b.top,
+              left: b.left,
+              width: b.w,
+              height: b.w,
+              background: b.color,
+            }}
+          />
+        ))}
+
+        {/* Particles */}
+        {particles.map((style, i) => (
+          <Particle key={i} style={style} />
+        ))}
+
+        <p className="title-top">
+          Grande countdown per il grande regalo per il grande bimbo
+        </p>
+
+        <div className="clock-wrapper">
+          <CountUnit value={String(time.days)} label="Days" />
+          <CountUnit value={pad(time.hours)} label="Hours" />
+          <CountUnit value={pad(time.minutes)} label="Minutes" />
+          <CountUnit value={pad(time.seconds)} label="Seconds" />
+        </div>
+
+        {/* Review-like texts in absolute positions */}
+        <>
+          <span className="review-abs review-1">4/4 IGN</span>
+          <span className="review-abs review-2">Best gifto del mondo</span>
+          <span className="review-abs review-3">Capolavoro assoluto</span>
+          <span className="review-abs review-4">
+            Un regalo che cambia la vita
+          </span>
+          <span className="review-abs review-5">Consigliatissimo ⭐⭐⭐⭐</span>
+          <span className="review-abs review-6">
+            Più bello di Pokémon Z-A (e meno male)
+          </span>
+          <span className="review-abs review-7">Non ci dormo la notte</span>
+        </>
       </div>
     </>
   );

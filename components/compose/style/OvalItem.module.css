@@ -1,0 +1,50 @@
+.container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 6px;
+  cursor: pointer;
+  user-select: none;
+}
+
+.container:active {
+  opacity: 0.75;
+}
+
+.selected .imageWrapper {
+  border-color: #6366f1 !important;
+  box-shadow: 0 0 0 3px rgba(99, 102, 241, 0.45);
+  transform: scale(1.08);
+}
+
+.selected .label {
+  color: #a5b4fc;
+}
+
+.imageWrapper {
+  width: 80px;
+  border: 2px solid rgba(255, 255, 255, 0.15);
+  border-radius: 6px;
+  overflow: hidden;
+  transition:
+    border-color 0.2s ease,
+    transform 0.2s ease;
+}
+
+.container:hover .imageWrapper {
+  border-color: rgba(255, 255, 255, 0.6);
+  transform: scale(1.06);
+}
+
+.image {
+  width: 100%;
+  height: auto;
+  display: block;
+  pointer-events: none;
+}
+
+.label {
+  color: #9ca3af;
+  font-size: 0.7rem;
+  text-align: center;
+}

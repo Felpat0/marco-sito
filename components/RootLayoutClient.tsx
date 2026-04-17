@@ -1,5 +1,6 @@
 "use client";
 
+import { GameProvider } from "@/app/gameContext";
 import { CardsProvider } from "@/features/cardsManagement/CardsContext";
 import React from "react";
 
@@ -24,5 +25,9 @@ export default function RootLayoutClient({
     }
   }, []);
 
-  return <CardsProvider>{children}</CardsProvider>;
+  return (
+    <CardsProvider>
+      <GameProvider>{children}</GameProvider>
+    </CardsProvider>
+  );
 }
