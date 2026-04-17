@@ -18,7 +18,7 @@ export function useImageComposer() {
       ovalSrc: string,
       anchor: { x: number; y: number } = { x: 50, y: 50 },
       zoom: number = 1.0,
-      mainInFront: boolean = true,
+      mainInFront: boolean = true
     ): Promise<string> => {
       const [mainImg, ovalImg] = await Promise.all([
         loadImage(mainSrc),
@@ -52,7 +52,7 @@ export function useImageComposer() {
 
       return canvas.toDataURL("image/png");
     },
-    [],
+    []
   );
 
   return { compose };

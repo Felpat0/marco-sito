@@ -1,6 +1,6 @@
 .layout {
-  display: flex;
   height: 100vh;
+  display: flex;
   overflow: hidden;
   background: #111827;
   font-family:
@@ -13,7 +13,7 @@
   .layout {
     flex-direction: column;
     height: auto;
-    min-height: 100svh;
-    overflow: visible;
+    min-height: 100vh;
+    overflow: auto;
   }
 }
