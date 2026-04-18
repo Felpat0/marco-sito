@@ -15,6 +15,7 @@ type CardStylesArguments = {
   initialPositionOffset?: { top: number; left: number };
   imageUrl?: string;
   cardType?: CardType["type"];
+  isInReorderArea?: boolean;
 };
 
 export const getCardStyles: (args: CardStylesArguments) => StyleStructure = ({
@@ -25,6 +26,7 @@ export const getCardStyles: (args: CardStylesArguments) => StyleStructure = ({
   initialPositionOffset = { top: 0, left: 0 },
   cardType,
   imageUrl = "",
+  isInReorderArea = false,
 }) => ({
   cardContainer: {
     base: {
@@ -47,13 +49,15 @@ export const getCardStyles: (args: CardStylesArguments) => StyleStructure = ({
     },
     hover: {
       position: "absolute",
-      transform: `rotate(0deg) scale(2.3)`,
-      transition: "transform 0.3s ease",
+      transform: !isInReorderArea ? `rotate(0deg) scale(2.3)` : undefined,
+      transition: !isInReorderArea ? "transform 0.3s ease" : undefined,
       zIndex: 100,
       top: touchPosition?.top - initialPositionOffset?.top,
       left: touchPosition?.left - initialPositionOffset?.left,
       marginTop: 0,
-      boxShadow: `0px 0px 7px 4px ${getCardTypeColor(cardType)}`,
+      boxShadow: !isInReorderArea
+        ? `0px 0px 7px 4px ${getCardTypeColor(cardType)}`
+        : undefined,
       border: "none",
     },
   },

@@ -5,7 +5,7 @@ import { useGame } from "@/app/gameContext";
 import { CardType } from "@/features/cardsManagement/types";
 
 export const BottomUI = () => {
-  const { hand, playCard, drawCard } = useContext(CardsContext);
+  const { hand, playCard, drawCard, setHand } = useContext(CardsContext);
   const { attack, defend, heal, isPlayerTurn } = useGame();
   useEffect(() => {
     if (isPlayerTurn) {
@@ -37,5 +37,5 @@ export const BottomUI = () => {
     [hand, attack, defend, heal, playCard, isPlayerTurn]
   );
 
-  return <Hand cards={hand} onCardPlay={handleCardPlay} />;
+  return <Hand cards={hand} onCardPlay={handleCardPlay} setHand={setHand} />;
 };
