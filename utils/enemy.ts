@@ -24,16 +24,16 @@ export interface Character {
 
 export const RANDOM_FACTOR = 0.2;
 
-export const ENEMY_HP = 20;
+export const ENEMY_HP = 10;
 export const ENEMY_HP_INCREMENT = 0.2;
 
 export const ENEMY_ATTACK = 5;
 export const ENEMY_ATTACK_INCREMENT = 0.2;
 
-export const ENEMY_DEFENSE = 5;
+export const ENEMY_DEFENSE = 1;
 export const ENEMY_DEFENSE_INCREMENT = 0.2;
 
-export const ENEMY_HEAL = 5;
+export const ENEMY_HEAL = 1;
 export const ENEMY_HEAL_INCREMENT = 0.2;
 
 export const ENEMY_POOL: EnemyDB[] = [
@@ -82,7 +82,7 @@ export const ENEMY_POOL: EnemyDB[] = [
   {
     name: "Death - Cattini con gli stivalini",
     finalMessage:
-      "Hai spanato l'ano a Picardello e Rosello, e adesso anche a me ( ;)))) ). All'open day di STM ci hanno detto che la maggior parte degli studenti rinuncia prima di riuscire a laurearsi, ma tu non l'hai fatto e beh eccoti qui. Vanne fiero, renditi conto del traguardo che hai tagliato.",
+      "Hai spanato l'ano a Picardello e Roselli, e adesso anche a me ( ;)))) ). All'open day di STM ci hanno detto che la maggior parte degli studenti rinuncia prima di riuscire a laurearsi, ma tu non l'hai fatto e beh eccoti qui. Vanne fiero, renditi conto del traguardo che hai tagliato.",
     image: "/images/enemy/Fede.png",
   },
   {
