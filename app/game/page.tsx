@@ -36,7 +36,7 @@ export default function GamePage() {
   return (
     <>
       <div className={styles["game-page"]}>
-        <div style={{ position: "absolute", zIndex: 1000 }}>
+        {/* <div style={{ position: "absolute", zIndex: 1000 }}>
           <button
             onTouchStart={() => setGameEnd(GameEnd.ENDGAME)}
             onClick={() => setGameEnd(GameEnd.ENDGAME)}
@@ -49,7 +49,7 @@ export default function GamePage() {
           >
             win fight
           </button>
-        </div>
+        </div> */}
         {gameEnd === GameEnd.LOSE && (
           <div className={styles["game-overlay"]}>
             <div className={styles["game-overlay-content"]}>
