@@ -93,6 +93,7 @@ export const Card = ({
     touchPosition,
     initialPositionOffset,
     imageUrl,
+    cardType: type,
   });
   return (
     <div
