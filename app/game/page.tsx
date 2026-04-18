@@ -1,6 +1,7 @@
 "use client";
 
-import { useEffect, useRef, useState } from "react";
+import { type ReactNode, useEffect, useRef, useState } from "react";
+import { QRCodeSVG } from "qrcode.react";
 import { GameEnd, useGame } from "../gameContext";
 import styles from "./style.module.css";
 import WinCard from "@/components/winCard/WinCard";
@@ -10,12 +11,14 @@ import EndGame from "@/components/endGame/EndGame";
 
 // - schermada finale con foto
 // ------------------
+// - girare il telefono
 // - foto carte
 // - foto mostri
 // - boss finale
 // - suoni
 
-export default function GamePage() {
+// ── Shared game board — reused as-is by the watch page ──────────────────────
+export function GameBoard({ header }: { header?: ReactNode }) {
   const {
     player,
     enemy,
@@ -24,26 +27,12 @@ export default function GamePage() {
     log,
     playerAnimation,
     enemyAnimation,
-    setGameEnd,
-    lobbyId,
-    createLobby,
   } = useGame();
-
-  useEffect(() => {
-    startGame();
-  }, []);
 
   return (
     <>
       <div className={styles["game-page"]}>
-        <LobbyBar lobbyId={lobbyId} createLobby={createLobby} />
-        <button
-          onTouchStart={() => setGameEnd(GameEnd.ENDGAME)}
-          onClick={() => setGameEnd(GameEnd.ENDGAME)}
-          style={{ zIndex: 10000 }}
-        >
-          win game
-        </button>
+        {header}
         {gameEnd === GameEnd.LOSE && (
           <div className={styles["game-overlay"]}>
             <div className={styles["game-overlay-content"]}>
@@ -56,10 +45,7 @@ export default function GamePage() {
         )}
         {gameEnd === GameEnd.ENDGAME && <EndGame />}
         {gameEnd === GameEnd.WIN && <WinCard />}
-        {/* <EndGame /> */}
-        {/* Sezione personaggi */}
         <div className={styles["game-arena"]}>
-          {/* Personaggio giocatore */}
           <Character
             name={player.name}
             hp={player.hp}
@@ -68,8 +54,6 @@ export default function GamePage() {
             variant="player"
             animation={playerAnimation}
           />
-
-          {/* Mostro avversario */}
           {enemy && (
             <Character
               name={enemy.name}
@@ -81,8 +65,6 @@ export default function GamePage() {
             />
           )}
         </div>
-
-        {/* Log turno */}
         <div className={styles["game-log"]}>{log}</div>
         {/* Bottoni azione */}
         {/* <div className={styles["game-actions"]}>
@@ -116,6 +98,32 @@ export default function GamePage() {
   );
 }
 
+// ── Host-only game page ───────────────────────────────────────────────────────
+export default function GamePage() {
+  const { startGame, lobbyId, createLobby, setGameEnd } = useGame();
+
+  useEffect(() => {
+    startGame();
+  }, []);
+
+  return (
+    <GameBoard
+      header={
+        <>
+          <LobbyBar lobbyId={lobbyId} createLobby={createLobby} />
+          <button
+            onTouchStart={() => setGameEnd(GameEnd.ENDGAME)}
+            onClick={() => setGameEnd(GameEnd.ENDGAME)}
+            style={{ zIndex: 10000, position: "absolute", top: 10, right: 10 }}
+          >
+            win game
+          </button>
+        </>
+      }
+    />
+  );
+}
+
 // ── Lobby sharing bar ──────────────────────────────────────────
 function LobbyBar({
   lobbyId,
@@ -124,31 +132,27 @@ function LobbyBar({
   lobbyId: string | null;
   createLobby: () => void;
 }) {
-  const [copied, setCopied] = useState(false);
+  const [showQr, setShowQr] = useState(false);
   const timerRef = useRef<ReturnType<typeof setTimeout> | null>(null);
-
-  const copyLink = () => {
-    const url = `${window.location.origin}/watch/${lobbyId}`;
-    navigator.clipboard.writeText(url).then(() => {
-      setCopied(true);
-      if (timerRef.current) clearTimeout(timerRef.current);
-      timerRef.current = setTimeout(() => setCopied(false), 2000);
-    });
-  };
+  const url = lobbyId
+    ? `${typeof window !== "undefined" ? window.location.origin : ""}/watch/${lobbyId}`
+    : "";
 
   const barStyle: React.CSSProperties = {
-    position: "relative",
+    position: "absolute",
+    top: "0",
+    left: "0",
     zIndex: 9999,
     display: "flex",
-    alignItems: "center",
-    gap: "0.5rem",
+    flexDirection: "column",
+    alignItems: "flex-start",
+    gap: "0.4rem",
     padding: "0.4rem 0.75rem",
     background: "rgba(0,0,0,0.6)",
     borderRadius: "0.6rem",
     backdropFilter: "blur(4px)",
     fontSize: "0.8rem",
     color: "#fff",
-    flexWrap: "wrap",
   };
 
   const btnStyle: React.CSSProperties = {
@@ -166,7 +170,7 @@ function LobbyBar({
     return (
       <div style={barStyle}>
         <button style={btnStyle} onClick={createLobby}>
-          👁 Condividi partita
+          👁
         </button>
       </div>
     );
@@ -174,12 +178,23 @@ function LobbyBar({
 
   return (
     <div style={barStyle}>
-      <span style={{ color: "#facc15", fontWeight: 700 }}>
-        Lobby: {lobbyId}
-      </span>
-      <button style={btnStyle} onClick={copyLink}>
-        {copied ? "✅ Copiato!" : "📋 Copia link"}
-      </button>
+      <div style={{ display: "flex", alignItems: "center", gap: "0.5rem" }}>
+        <span style={{ color: "#facc15", fontWeight: 700 }}>{lobbyId}</span>
+        <button style={btnStyle} onClick={() => setShowQr((v) => !v)}>
+          {showQr ? "✖" : "QR"}
+        </button>
+      </div>
+      {showQr && (
+        <div
+          style={{
+            background: "#fff",
+            padding: "0.4rem",
+            borderRadius: "0.4rem",
+          }}
+        >
+          <QRCodeSVG value={url} size={140} />
+        </div>
+      )}
     </div>
   );
 }

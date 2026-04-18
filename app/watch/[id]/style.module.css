@@ -102,14 +102,13 @@
   /* no background → fully transparent, but pointer-events are captured */
 }
 
-/* Watch badge — rendered above the blocker, display-only */
+/* Watch badge — rendered above the blocker */
 .watchBadge {
   position: fixed;
   top: 0.5rem;
   left: 50%;
   transform: translateX(-50%);
   z-index: 9999;
-  pointer-events: none;
   display: flex;
   align-items: center;
   gap: 0.4rem;
@@ -121,12 +120,36 @@
   color: #facc15;
   backdrop-filter: blur(4px);
   white-space: nowrap;
+  cursor: default;
 }
 
 .updateTime {
   font-weight: 400;
   color: #9ca3af;
   font-size: 0.72rem;
+}
+
+.qrBtn {
+  padding: 0.15rem 0.5rem;
+  background: #eab308;
+  color: #000;
+  font-weight: 700;
+  border: none;
+  border-radius: 0.4rem;
+  cursor: pointer;
+  font-size: 0.72rem;
+  line-height: 1.4;
+}
+
+.qrPanel {
+  position: absolute;
+  top: calc(100% + 0.5rem);
+  left: 50%;
+  transform: translateX(-50%);
+  background: #fff;
+  padding: 0.5rem;
+  border-radius: 0.5rem;
+  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.5);
 }
 
 

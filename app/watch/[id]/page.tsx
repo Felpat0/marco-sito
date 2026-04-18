@@ -1,9 +1,9 @@
 "use client";
 
 import { useEffect, useState } from "react";
+import { QRCodeSVG } from "qrcode.react";
 import { useParams } from "next/navigation";
 
-// Game context + components — same as game/page.tsx
 import {
   GameContext,
   GameEnd,
@@ -12,24 +12,20 @@ import {
   type AnimationType,
 } from "@/app/gameContext";
 import { CardsContext } from "@/features/cardsManagement/CardsContext";
-import { CardType } from "@/features/cardsManagement/types";
-import { Enemy } from "@/utils/enemy";
-import Character from "@/components/character/Character";
-import { BottomUI } from "@/components/gameplay-ui/BottomUI";
-import WinCard from "@/components/winCard/WinCard";
-import EndGame from "@/components/endGame/EndGame";
-import gameStyles from "@/app/game/style.module.css";
+import { type CardType } from "@/features/cardsManagement/types";
+import { type Enemy } from "@/utils/enemy";
+import { GameBoard } from "@/app/game/page";
 import watchStyles from "./style.module.css";
 
 // ── Types ────────────────────────────────────────────────────
-type WatchEnemy = Enemy; // full Enemy serialised to the lobby
-
 type WatchState = {
   player: { hp: number; maxHp: number; name: string; image: string };
-  enemy: WatchEnemy | null;
-  gameEnd: number | null; // 0=WIN 1=LOSE 2=ENDGAME (GameEnd enum)
+  enemy: Enemy | null;
+  gameEnd: number | null;
   log: string;
   hand: CardType[];
+  playerAnimation: AnimationType;
+  enemyAnimation: AnimationType;
   updatedAt: number;
 };
 
@@ -76,8 +72,8 @@ function WatchProviders({
     log: state.log,
     enemyNextMove: EnemyMove.IDLE,
     enemyNextMoveValue: 0,
-    playerAnimation: null as AnimationType,
-    enemyAnimation: null as AnimationType,
+    playerAnimation: state.playerAnimation ?? null,
+    enemyAnimation: state.enemyAnimation ?? null,
     clearAnimations: NOOP,
   };
 
@@ -107,6 +103,7 @@ export default function WatchPage() {
   const [state, setState] = useState<WatchState | null>(null);
   const [notFound, setNotFound] = useState(false);
   const [lastUpdate, setLastUpdate] = useState<Date | null>(null);
+  const [showQr, setShowQr] = useState(false);
 
   useEffect(() => {
     let active = true;
@@ -147,73 +144,37 @@ export default function WatchPage() {
     );
   }
 
-  const gameEnd = state.gameEnd as GameEnd | null;
-
   return (
     <>
-      {/* ── Exact same layout as game/page.tsx ── */}
       <WatchProviders state={state} lobbyId={id}>
-        <div className={gameStyles["game-page"]}>
-          {/* LOSE overlay */}
-          {gameEnd === GameEnd.LOSE && (
-            <div className={gameStyles["game-overlay"]}>
-              <div className={gameStyles["game-overlay-content"]}>
-                <h2 className={gameStyles["game-over-title"]}>💀 Hai perso!</h2>
-                <button className={gameStyles["game-replay-btn"]}>
-                  Riprova
-                </button>
-              </div>
-            </div>
-          )}
-
-          {/* ENDGAME overlay — reuses the real EndGame component */}
-          {gameEnd === GameEnd.ENDGAME && <EndGame />}
-
-          {/* WIN overlay — reuses the real WinCard component */}
-          {gameEnd === GameEnd.WIN && <WinCard />}
-
-          {/* Arena */}
-          <div className={gameStyles["game-arena"]}>
-            <Character
-              name={state.player.name}
-              hp={state.player.hp}
-              maxHp={state.player.maxHp}
-              image={state.player.image}
-              variant="player"
-              animation={null}
-            />
-            {state.enemy && (
-              <Character
-                name={state.enemy.name}
-                hp={state.enemy.hp}
-                maxHp={state.enemy.maxHp}
-                image={state.enemy.image}
-                variant="monster"
-                animation={null}
-              />
-            )}
-          </div>
-
-          {/* Log */}
-          <div className={gameStyles["game-log"]}>{state.log}</div>
-        </div>
-
-        {/* Hand — reuses the real BottomUI */}
-        <div className={gameStyles["hand-container"]}>
-          <BottomUI />
-        </div>
+        {/* Exact same component the host sees — no modifications needed */}
+        <GameBoard />
       </WatchProviders>
 
-      {/* ── Transparent blocker — sits above everything, intercepts all input ── */}
+      {/* Transparent blocker: sits above everything, intercepts all input */}
       <div className={watchStyles.blocker} />
 
-      {/* ── Watch badge — above the blocker ── */}
+      {/* Watch badge: above the blocker */}
       <div className={watchStyles.watchBadge}>
-        <span>👁 Lobby: {id}</span>
+        <span>👁 {id}</span>
         {lastUpdate && (
           <span className={watchStyles.updateTime}>
             · {lastUpdate.toLocaleTimeString()}
           </span>
+        )}
+        <button
+          className={watchStyles.qrBtn}
+          onClick={() => setShowQr((v) => !v)}
+        >
+          {showQr ? "✖" : "QR"}
+        </button>
+        {showQr && (
+          <div className={watchStyles.qrPanel}>
+            <QRCodeSVG
+              value={`${window.location.origin}/watch/${id}`}
+              size={140}
+            />
+          </div>
         )}
       </div>
     </>

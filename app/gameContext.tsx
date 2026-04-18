@@ -141,6 +141,8 @@ export function GameProvider({ children }: { children: React.ReactNode }) {
           gameEnd,
           log,
           hand,
+          playerAnimation,
+          enemyAnimation,
           updatedAt: Date.now(),
         }),
       }).catch(() => {});
