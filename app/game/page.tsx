@@ -16,10 +16,24 @@ import { LobbyBar } from "@/components/LobbyBar";
 // ── Host-only game page ───────────────────────────────────────────────────────
 export default function GamePage() {
   const { startGame, setGameEnd, lobbyId, createLobby } = useGame();
+  const holdTimer = useRef<ReturnType<typeof setTimeout> | null>(null);
 
   useEffect(() => {
     startGame();
   }, []);
+
+  const handleHoldStart = () => {
+    holdTimer.current = setTimeout(() => {
+      setGameEnd(GameEnd.WIN);
+    }, 3000);
+  };
+
+  const handleHoldEnd = () => {
+    if (holdTimer.current) {
+      clearTimeout(holdTimer.current);
+      holdTimer.current = null;
+    }
+  };
 
   return (
     <GameBoard
@@ -27,12 +41,24 @@ export default function GamePage() {
         <>
           <LobbyBar lobbyId={lobbyId} createLobby={createLobby} />
           <button
-            onTouchStart={() => setGameEnd(GameEnd.WIN)}
-            onClick={() => setGameEnd(GameEnd.WIN)}
-            style={{ zIndex: 10000, position: "absolute", top: 10, right: 10 }}
-          >
-            win fight
-          </button>
+            onMouseDown={handleHoldStart}
+            onMouseUp={handleHoldEnd}
+            onMouseLeave={handleHoldEnd}
+            onTouchStart={handleHoldStart}
+            onTouchEnd={handleHoldEnd}
+            style={{
+              zIndex: 50,
+              position: "absolute",
+              top: 10,
+              right: 10,
+              width: 44,
+              height: 44,
+              opacity: 0,
+              cursor: "default",
+              background: "transparent",
+              border: "none",
+            }}
+          />
         </>
       }
     />
