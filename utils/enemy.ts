@@ -25,7 +25,7 @@ export interface Character {
 export const RANDOM_FACTOR = 0.2;
 
 export const ENEMY_HP = 10;
-export const ENEMY_HP_INCREMENT = 0.2;
+export const ENEMY_HP_INCREMENT = 0.1;
 
 export const ENEMY_ATTACK = 5;
 export const ENEMY_ATTACK_INCREMENT = 0.2;
