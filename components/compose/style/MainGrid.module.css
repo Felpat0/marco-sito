@@ -5,7 +5,7 @@
   justify-content: space-evenly;
   gap:16px;
   padding: 24px;
-  align-content: start;
+  align-content: flex-start;
   overflow-y: auto;
 }
 

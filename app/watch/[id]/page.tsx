@@ -14,7 +14,7 @@ import {
 import { CardsContext } from "@/features/cardsManagement/CardsContext";
 import { type CardType } from "@/features/cardsManagement/types";
 import { type Enemy } from "@/utils/enemy";
-import { GameBoard } from "@/app/game/page";
+import { GameBoard } from "@/components/GameBoard";
 import watchStyles from "./style.module.css";
 
 // ── Types ────────────────────────────────────────────────────
