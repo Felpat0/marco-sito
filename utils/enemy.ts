@@ -44,10 +44,10 @@ export const ENEMY_POOL: EnemyDB[] = [
     image: "/images/enemy/Erika.png",
   },
   {
-    name: "Davide", //TODO
+    name: "Davislime",
     finalMessage:
       "Caro Marcolino ti faccio i miei piu sentiti auguri per la tua laurea. Spero tu possa trovare il lavoro che desideri per fare i money che ti serviranno a campare ❤️",
-    image: "https://placehold.co/160x160/ef4444/fff?text=Davide", //TODO
+    image: "/images/enemy/Davide.png",
   },
   {
     name: "Vincenzonte",
@@ -98,10 +98,10 @@ export const ENEMY_POOL: EnemyDB[] = [
     image: "/images/enemy/Andrea.png",
   },
   {
-    name: "Giacomo", //TODO
+    name: "Gatto del Bombishire",
     finalMessage:
       "Lorem ipsum dolor sit amet, un drago feroce appare! Lorem ipsum dolor sit amet, un drago feroce appare! Lorem ipsum dolor sit amet, un drago feroce appare!", //TODO
-    image: "https://placehold.co/160x160/3b82f6/fff?text=Giacomo", //TODO
+    image: "/images/enemy/Bombi.png",
   },
 ];
 
