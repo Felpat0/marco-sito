@@ -385,17 +385,18 @@ export default function Home() {
           <CountUnit value={pad(time.seconds)} label="Seconds" />
         </div>
 
-        {isCountdownOver && (
-          <div className="countdown-over">
-            <h1 style={{ fontSize: "3rem" }}>È arrivato il momento.</h1>
-            <div
-              className="start-button"
-              onClick={() => router.push("/compose")}
-            >
-              Procedi
+        {isCountdownOver ||
+          (true && (
+            <div className="countdown-over">
+              <h1 style={{ fontSize: "3rem" }}>È arrivato il momento.</h1>
+              <div
+                className="start-button"
+                onClick={() => router.push("/compose")}
+              >
+                Procedi
+              </div>
             </div>
-          </div>
-        )}
+          ))}
 
         {/* Review-like texts in absolute positions */}
         <>
