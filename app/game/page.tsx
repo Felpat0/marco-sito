@@ -27,11 +27,11 @@ export default function GamePage() {
         <>
           <LobbyBar lobbyId={lobbyId} createLobby={createLobby} />
           <button
-            onTouchStart={() => setGameEnd(GameEnd.ENDGAME)}
-            onClick={() => setGameEnd(GameEnd.ENDGAME)}
+            onTouchStart={() => setGameEnd(GameEnd.WIN)}
+            onClick={() => setGameEnd(GameEnd.WIN)}
             style={{ zIndex: 10000, position: "absolute", top: 10, right: 10 }}
           >
-            win game
+            win fight
           </button>
         </>
       }
