@@ -1,0 +1,276 @@
+.page {
+  position: relative;
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: space-between;
+  background-color: #111827;
+  background-image: url("/images/backgorund-arena.png");
+  background-size: cover;
+  background-position: center;
+  padding: 1rem;
+  color: #fff;
+  gap: 1rem;
+}
+
+/* ── Header bar ── */
+.header {
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 0.25rem;
+  padding: 0.5rem 1rem;
+  background: rgba(0, 0, 0, 0.55);
+  border-radius: 0.75rem;
+  backdrop-filter: blur(4px);
+}
+
+.badge {
+  font-size: 0.9rem;
+  font-weight: 700;
+  color: #facc15;
+  letter-spacing: 0.05em;
+}
+
+.updateTime {
+  font-size: 0.7rem;
+  color: #9ca3af;
+}
+
+/* ── Arena ── */
+.arena {
+  display: flex;
+  width: 100%;
+  justify-content: space-between;
+  align-items: center;
+  flex: 1;
+  gap: 1rem;
+}
+
+/* ── Log ── */
+.log {
+  color: #9ca3af;
+  font-style: italic;
+  font-size: 0.875rem;
+  text-align: center;
+  min-height: 1.5rem;
+  padding: 0.5rem 1rem;
+  background: rgba(0, 0, 0, 0.4);
+  border-radius: 0.5rem;
+  width: 100%;
+}
+
+/* ── Game end banner ── */
+.gameEndBanner {
+  font-size: 1.5rem;
+  font-weight: 700;
+  color: #fff;
+  text-shadow: 0 0 20px #facc15;
+  text-align: center;
+  padding: 0.75rem 1.5rem;
+  background: rgba(0, 0, 0, 0.6);
+  border-radius: 0.75rem;
+  width: 100%;
+}
+
+/* ── Loading / not found ── */
+.loading,
+.notFound {
+  min-height: 100vh;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background-color: #111827;
+  color: #9ca3af;
+  font-size: 1.1rem;
+  text-align: center;
+  padding: 2rem;
+}
+
+/*
+ * Transparent layer that sits on top of all game content.
+ * It captures every pointer / touch event so spectators cannot
+ * interact with anything underneath.
+ */
+.blocker {
+  position: fixed;
+  inset: 0;
+  z-index: 9998;
+  cursor: default;
+  /* no background → fully transparent, but pointer-events are captured */
+}
+
+/* Watch badge — rendered above the blocker, display-only */
+.watchBadge {
+  position: fixed;
+  top: 0.5rem;
+  left: 50%;
+  transform: translateX(-50%);
+  z-index: 9999;
+  pointer-events: none;
+  display: flex;
+  align-items: center;
+  gap: 0.4rem;
+  padding: 0.3rem 0.9rem;
+  background: rgba(0, 0, 0, 0.65);
+  border-radius: 999px;
+  font-size: 0.8rem;
+  font-weight: 700;
+  color: #facc15;
+  backdrop-filter: blur(4px);
+  white-space: nowrap;
+}
+
+.updateTime {
+  font-weight: 400;
+  color: #9ca3af;
+  font-size: 0.72rem;
+}
+
+
+/* ── Generic overlay (WIN / LOSE / ENDGAME) ── */
+.overlay {
+  position: absolute;
+  inset: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background-color: rgba(0, 0, 0, 0.72);
+  z-index: 10;
+}
+
+.overlayText {
+  font-size: 1.8rem;
+  font-weight: 700;
+  color: #fff;
+  text-align: center;
+  text-shadow: 0 0 24px #facc15, 0 2px 8px #000;
+  line-height: 1.4;
+  padding: 1.5rem 2rem;
+  background: rgba(0, 0, 0, 0.5);
+  border-radius: 1rem;
+}
+
+.overlaySubText {
+  display: block;
+  font-size: 1.1rem;
+  font-weight: 400;
+  color: #facc15;
+  margin-top: 0.5rem;
+}
+
+/* ── WIN overlay content (mirrors WinCard layout) ── */
+.winContent {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  gap: 5%;
+  width: 90%;
+  max-width: 500px;
+}
+
+.winMessage {
+  color: #000;
+  font-size: 1rem;
+  width: 55%;
+}
+
+.winBubble {
+  border-radius: 1rem;
+  padding: 1rem;
+  background-color: #d1d5db;
+  margin: 0;
+  position: relative;
+}
+
+.winName {
+  display: block;
+  font-size: 1.1rem;
+  font-weight: 700;
+  margin-bottom: 0.5rem;
+  color: #000;
+}
+
+.winEnemyImg {
+  width: 40%;
+  max-width: 140px;
+  border-radius: 50%;
+  object-fit: cover;
+  aspect-ratio: 1;
+}
+
+/* ── Read-only hand ── */
+.hand {
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+  align-items: flex-end;
+  gap: 0.5rem;
+  padding: 0.5rem 1rem;
+  background: rgba(0, 0, 0, 0.45);
+  border-radius: 0.75rem;
+  width: 100%;
+  overflow-x: auto;
+}
+
+.watchCard {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-end;
+  align-items: center;
+  border: 2px solid #ccc;
+  border-radius: 8px;
+  padding: 0.4rem;
+  background-size: cover;
+  background-position: center;
+  background-color: #1f2937;
+  aspect-ratio: 3 / 4;
+  height: 14vh;
+  min-width: 60px;
+  flex-shrink: 0;
+  color: #fff;
+  overflow: hidden;
+}
+
+.watchCardPower {
+  position: absolute;
+  top: 4px;
+  left: 4px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  font-size: 0.65rem;
+  font-weight: 700;
+  color: #fff;
+  text-shadow: 0 0 4px #000;
+  line-height: 1;
+}
+
+.watchCardName {
+  font-size: 0.55rem;
+  font-weight: 700;
+  text-align: center;
+  color: #fff;
+  text-shadow: -0.5px -0.5px 0 #000, 0.5px -0.5px 0 #000,
+    -0.5px 0.5px 0 #000, 0.5px 0.5px 0 #000;
+  background: rgba(0, 0, 0, 0.45);
+  border-radius: 4px;
+  padding: 1px 3px;
+  width: 100%;
+}
+
+/* ── Game end banner (fallback, not used anymore but kept) ── */
+.gameEndBanner {
+  font-size: 1.5rem;
+  font-weight: 700;
+  color: #fff;
+  text-shadow: 0 0 20px #facc15;
+  text-align: center;
+  padding: 0.75rem 1.5rem;
+  background: rgba(0, 0, 0, 0.6);
+  border-radius: 0.75rem;
+  width: 100%;
+}

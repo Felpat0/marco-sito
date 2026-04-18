@@ -1,6 +1,12 @@
 "use client";
 
-import React, { createContext, useContext, useState } from "react";
+import React, {
+  createContext,
+  useContext,
+  useEffect,
+  useRef,
+  useState,
+} from "react";
 import {
   Character,
   Enemy,
@@ -9,7 +15,7 @@ import {
 } from "../utils/enemy";
 import { CardsContext } from "@/features/cardsManagement/CardsContext";
 
-const GameContext = createContext<GameContextType | null>(null);
+export const GameContext = createContext<GameContextType | null>(null);
 
 export enum GameEnd {
   WIN,
@@ -38,8 +44,12 @@ export function getRandomEnemyMove(): EnemyMove {
 
 type AnimationType = "damage" | "heal" | "defend" | null;
 
-interface GameContextType {
+export type { AnimationType };
+
+export interface GameContextType {
   setGameEnd: React.Dispatch<React.SetStateAction<GameEnd | null>>;
+  lobbyId: string | null;
+  createLobby: () => void;
   player: Character;
   enemy: Enemy;
   nextEnemy: () => void;
@@ -107,7 +117,35 @@ export function GameProvider({ children }: { children: React.ReactNode }) {
   const [playerAnimation, setPlayerAnimation] = useState<AnimationType>(null);
   const [enemyAnimation, setEnemyAnimation] = useState<AnimationType>(null);
 
-  const { generateHand } = useContext(CardsContext);
+  const [lobbyId, setLobbyId] = useState<string | null>(null);
+  const pushTimer = useRef<ReturnType<typeof setTimeout> | null>(null);
+
+  const { generateHand, hand } = useContext(CardsContext);
+
+  const createLobby = () => {
+    const id = Math.random().toString(36).slice(2, 8).toUpperCase();
+    setLobbyId(id);
+  };
+
+  // Sync game state to lobby whenever something changes
+  useEffect(() => {
+    if (!lobbyId) return;
+    if (pushTimer.current) clearTimeout(pushTimer.current);
+    pushTimer.current = setTimeout(() => {
+      fetch(`/api/lobby/${lobbyId}`, {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({
+          player,
+          enemy: enemies[0] ?? null,
+          gameEnd,
+          log,
+          hand,
+          updatedAt: Date.now(),
+        }),
+      }).catch(() => {});
+    }, 200);
+  }, [player, enemies, gameEnd, log, hand, lobbyId]);
 
   const clearAnimations = () => {
     setPlayerAnimation(null);
@@ -260,6 +298,8 @@ export function GameProvider({ children }: { children: React.ReactNode }) {
     <GameContext.Provider
       value={{
         setGameEnd,
+        lobbyId,
+        createLobby,
         player,
         enemy: enemies[0],
         enemyNextMove,
