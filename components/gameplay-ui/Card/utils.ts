@@ -7,10 +7,16 @@ export const onCardTouchMove = (
   event: TouchEvent,
   setPosition: React.Dispatch<
     React.SetStateAction<{ top: number; left: number }>
-  >
+  >,
+  setIsInReorderArea: React.Dispatch<React.SetStateAction<boolean>>
 ) => {
   const touch = event?.touches[0];
   setPosition({ top: touch.clientY, left: touch.clientX });
+  if (touch.clientY > window.innerHeight - 100) {
+    setIsInReorderArea(true);
+  } else {
+    setIsInReorderArea(false);
+  }
 };
 
 export const getCardZIndex = (index: number, isHovered: boolean) => {

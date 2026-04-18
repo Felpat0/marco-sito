@@ -10,6 +10,7 @@ import { BiPlusMedical } from "react-icons/bi";
 export type CardProps = CardType & {
   index?: number;
   cardsNumber?: number;
+  isInReorderArea?: boolean;
   onStartDrag?: () => void;
   onRelease?: (event: TouchEvent) => void;
 };
@@ -30,6 +31,7 @@ export const Card = ({
     top: 0,
     left: 0,
   });
+  const [isInReorderArea, setIsInReorderArea] = useState(false);
   const cardContainerRef = useRef<HTMLDivElement>(null);
 
   const handleRelease = useCallback(
@@ -61,7 +63,7 @@ export const Card = ({
         y: cardContainerRef.current?.getBoundingClientRect().top || 0,
       };
 
-      onCardTouchMove(event, setTouchPosition);
+      onCardTouchMove(event, setTouchPosition, setIsInReorderArea);
       setInitialPositionOffset({
         top: touchPosition.y - cardOrigin.y,
         left: touchPosition.x - cardOrigin.x,
@@ -71,7 +73,8 @@ export const Card = ({
   );
 
   const handleTouchMove = useCallback(
-    (event: TouchEvent) => onCardTouchMove(event, setTouchPosition),
+    (event: TouchEvent) =>
+      onCardTouchMove(event, setTouchPosition, setIsInReorderArea),
     []
   );
 
@@ -94,6 +97,7 @@ export const Card = ({
     initialPositionOffset,
     imageUrl,
     cardType: type,
+    isInReorderArea,
   });
   return (
     <div

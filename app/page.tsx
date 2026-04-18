@@ -61,6 +61,12 @@ export default function Home() {
   const [mounted, setMounted] = useState(false);
   const router = useRouter();
 
+  const isCountdownOver =
+    time.days === 0 &&
+    time.hours === 0 &&
+    time.minutes === 0 &&
+    time.seconds === 0;
+
   useEffect(() => {
     setMounted(true);
     const pts: React.CSSProperties[] = Array.from({ length: 60 }).map(() => ({
@@ -81,13 +87,6 @@ export default function Home() {
     }, 1000);
     return () => clearInterval(interval);
   }, []);
-
-  const formattedStart = TARGET_DATE.toLocaleDateString("en-GB", {
-    weekday: "long",
-    day: "numeric",
-    month: "long",
-    year: "numeric",
-  });
 
   return (
     <>
@@ -127,6 +126,31 @@ export default function Home() {
           border-radius: 50%;
           background: #fff;
           animation: drift linear infinite;
+        }
+
+        .countdown-over {
+          position: absolute;
+          width: 100vw;
+          height: 100vh;
+          background: rgba(0,0,0,0.9);
+          color: #fff;
+          display: flex;
+          flex-direction: column;
+          gap: 1.5rem;
+          align-items: center;
+          justify-content: center;
+          z-index: 20;
+        }
+
+        .start-button {
+          background: rgba(255,255,255,0.9);
+          color: #000;
+          border: 1px solid rgba(195, 0, 255, 0.1);
+          padding: .5rem 1rem;
+          font-size: 2rem;
+          font-weight: 600;
+          cursor: pointer;
+          transition: background 0.3s ease;
         }
 
         @keyframes drift {
@@ -360,6 +384,18 @@ export default function Home() {
           <CountUnit value={pad(time.minutes)} label="Minutes" />
           <CountUnit value={pad(time.seconds)} label="Seconds" />
         </div>
+
+        {isCountdownOver && (
+          <div className="countdown-over">
+            <h1 style={{ fontSize: "3rem" }}>È arrivato il momento.</h1>
+            <div
+              className="start-button"
+              onClick={() => router.push("/compose")}
+            >
+              Procedi
+            </div>
+          </div>
+        )}
 
         {/* Review-like texts in absolute positions */}
         <>
