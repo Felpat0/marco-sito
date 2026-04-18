@@ -8,6 +8,7 @@ import { BottomUI } from "@/components/gameplay-ui/BottomUI";
 import Character from "@/components/character/Character";
 import EndGame from "@/components/endGame/EndGame";
 import { OrientationOverlay } from "@/components/OrientationOverlay/OrientationOverlay";
+import { useOrientation } from "@/hooks/useOrientation";
 
 // - schermada finale con foto
 // ------------------
@@ -26,6 +27,7 @@ export default function GamePage() {
     enemyAnimation,
     setGameEnd,
   } = useGame();
+  const { isLandscape } = useOrientation();
 
   useEffect(() => {
     startGame();
@@ -113,7 +115,7 @@ export default function GamePage() {
       <div className={styles["hand-container"]}>
         <BottomUI />
       </div>
-      <OrientationOverlay />
+      {!isLandscape && <OrientationOverlay />}
     </>
   );
 }

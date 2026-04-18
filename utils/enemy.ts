@@ -44,10 +44,10 @@ export const ENEMY_POOL: EnemyDB[] = [
     image: "/images/enemy/Erika.png",
   },
   {
-    name: "Davide", //TODO
+    name: "Davislime",
     finalMessage:
       "Caro Marcolino ti faccio i miei piu sentiti auguri per la tua laurea. Spero tu possa trovare il lavoro che desideri per fare i money che ti serviranno a campare ❤️",
-    image: "https://placehold.co/160x160/ef4444/fff?text=Davide", //TODO
+    image: "/images/enemy/Davide.png",
   },
   {
     name: "Vincenzonte",
@@ -82,7 +82,7 @@ export const ENEMY_POOL: EnemyDB[] = [
   {
     name: "Death - Cattini con gli stivalini",
     finalMessage:
-      "Il temibile Gabbibbo appare! Lorem ipsum dolor sit amet, un drago feroce appare! Lorem ipsum dolor sit amet, un drago feroce appare!", //TODO
+      "Hai spanato l'ano a Picardello e Rosello, e adesso anche a me ( ;)))) ). All'open day di STM ci hanno detto che la maggior parte degli studenti rinuncia prima di riuscire a laurearsi, ma tu non l'hai fatto e beh eccoti qui. Vanne fiero, renditi conto del traguardo che hai tagliato.",
     image: "/images/enemy/Fede.png",
   },
   {
@@ -94,14 +94,14 @@ export const ENEMY_POOL: EnemyDB[] = [
   {
     name: "Scimpandré ",
     finalMessage:
-      "Lorem ipsum dolor sit amet, un drago feroce appare! Lorem ipsum dolor sit amet, un drago feroce appare! Lorem ipsum dolor sit amet, un drago feroce appare!", //TODO
+      "Eccoci qua, c'è chi ormai stava perdendo le speranze(te compreso), eppure io sapevo che ce l'avresti fatta. Rimpiango di non essere rimasto a farti compagnia in questo viaggio, ma forse è stato meglio cosi. Anche se questa storia si è conclusa, l'avventura non è finita; Ci saranno nuovi obbiettivi da raggiungere e traguardi da superare, ma facciamo un passo alla volta, per adesso brindiamo a questo tuo successo, il resto verrà da se. Auguri Dottore.",
     image: "/images/enemy/Andrea.png",
   },
   {
-    name: "Giacomo", //TODO
+    name: "Gatto del Bombishire",
     finalMessage:
-      "Lorem ipsum dolor sit amet, un drago feroce appare! Lorem ipsum dolor sit amet, un drago feroce appare! Lorem ipsum dolor sit amet, un drago feroce appare!", //TODO
-    image: "https://placehold.co/160x160/3b82f6/fff?text=Giacomo", //TODO
+      "Eh ma fammelo Gioca! Ma poi alla fine quando giochi vedi che gli obbiettivi li raggiungi, complimenti dottore… o ingegnere.",
+    image: "/images/enemy/Bombi.png",
   },
 ];
 

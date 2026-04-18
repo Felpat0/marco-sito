@@ -11,24 +11,37 @@ interface Props {
 export function OrientationOverlay({ onContinue }: Props) {
   const { isLandscape, isMobile } = useOrientation();
 
-  if (!isMobile || isLandscape) return null;
-
   return (
     <div className={styles.overlay} role="alertdialog" aria-modal="true">
-      <span className={styles.icon} aria-hidden="true">📱</span>
-      <p className={styles.title}>Ruota il dispositivo</p>
-      <p className={styles.subtitle}>
-        Per continuare, metti il telefono in orizzontale.
-      </p>
+      {isLandscape ? (
+        <>
+          <span className={styles.icon} aria-hidden="true">
+            📱
+          </span>
+          <p className={styles.title}>Condividi la tua partita</p>
+        </>
+      ) : (
+        <>
+          <span className={styles.icon} aria-hidden="true">
+            📱
+          </span>
+          <p className={styles.title}>Ruota il dispositivo</p>
+          <p className={styles.subtitle}>
+            Per continuare, metti il telefono in orizzontale.
+          </p>
+        </>
+      )}
       {onContinue && (
-        <button
-          className={styles.btn}
-          disabled={!isLandscape}
-          aria-disabled={!isLandscape}
-          onClick={onContinue}
-        >
-          Continua
-        </button>
+        <>
+          <button
+            className={styles.btn}
+            disabled={!isLandscape}
+            aria-disabled={!isLandscape}
+            onClick={onContinue}
+          >
+            Gioca
+          </button>
+        </>
       )}
     </div>
   );

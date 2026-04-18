@@ -15,7 +15,8 @@ export default function WinCard() {
           <div className={styles.messageContent}>
             <p className={styles.message}>
               <p className={styles.name}>{enemy.name}</p>
-              {enemy.finalMessage} <div className={styles.messageArrow}></div>
+              <div className={styles.finalMessage}>{enemy.finalMessage}</div>
+              <div className={styles.messageArrow}></div>
             </p>
           </div>
           <img src={enemy.image} alt={enemy.name} className={styles.image} />
