@@ -39,6 +39,7 @@ export function getRandomEnemyMove(): EnemyMove {
 type AnimationType = "damage" | "heal" | "defend" | null;
 
 interface GameContextType {
+  setGameEnd: React.Dispatch<React.SetStateAction<GameEnd | null>>;
   player: Character;
   enemy: Enemy;
   nextEnemy: () => void;
@@ -258,6 +259,7 @@ export function GameProvider({ children }: { children: React.ReactNode }) {
   return (
     <GameContext.Provider
       value={{
+        setGameEnd,
         player,
         enemy: enemies[0],
         enemyNextMove,
