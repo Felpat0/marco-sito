@@ -85,7 +85,7 @@ export function CompositeModal({ mainImage, faceImage, onClose }: Props) {
       compositeUrl ?? mainImage.src,
       mainImage.name + " " + faceImage.label
     );
-    router.push("/game");
+    router.push("/rotate");
   };
 
   return (

@@ -7,6 +7,7 @@ import WinCard from "@/components/winCard/WinCard";
 import { BottomUI } from "@/components/gameplay-ui/BottomUI";
 import Character from "@/components/character/Character";
 import EndGame from "@/components/endGame/EndGame";
+import { OrientationOverlay } from "@/components/OrientationOverlay/OrientationOverlay";
 
 // - schermada finale con foto
 // ------------------
@@ -40,6 +41,13 @@ export default function GamePage() {
           style={{ zIndex: 10000 }}
         >
           win game
+        </button>
+        <button
+          onTouchStart={() => setGameEnd(GameEnd.WIN)}
+          onClick={() => setGameEnd(GameEnd.WIN)}
+          style={{ zIndex: 10000 }}
+        >
+          win fight
         </button>
         {gameEnd === GameEnd.LOSE && (
           <div className={styles["game-overlay"]}>
@@ -109,6 +117,7 @@ export default function GamePage() {
       <div className={styles["hand-container"]}>
         <BottomUI />
       </div>
+      <OrientationOverlay />
     </>
   );
 }

@@ -38,6 +38,7 @@
 }
 
 .name {
+  white-space: nowrap;
     position: absolute;
     top: -30px;
     font-size: 1.25rem;
