@@ -39,7 +39,7 @@ export const getCardStyles: (args: CardStylesArguments) => StyleStructure = ({
     },
     hover: {
       position: "absolute",
-      transform: `rotate(0deg) scale(2)`,
+      transform: `rotate(0deg) scale(2.3)`,
       transition: "transform 0.3s ease",
       zIndex: 100,
       top: touchPosition?.top - initialPositionOffset?.top,
