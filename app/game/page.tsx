@@ -8,6 +8,7 @@ import WinCard from "@/components/winCard/WinCard";
 import { BottomUI } from "@/components/gameplay-ui/BottomUI";
 import Character from "@/components/character/Character";
 import EndGame from "@/components/endGame/EndGame";
+import { OrientationOverlay } from "@/components/OrientationOverlay/OrientationOverlay";
 
 // - schermada finale con foto
 // ------------------
@@ -94,6 +95,7 @@ export function GameBoard({ header }: { header?: ReactNode }) {
       <div className={styles["hand-container"]}>
         <BottomUI />
       </div>
+      <OrientationOverlay />
     </>
   );
 }
