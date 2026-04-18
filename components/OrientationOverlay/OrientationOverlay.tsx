@@ -2,8 +2,8 @@
 
 import { useOrientation } from "@/hooks/useOrientation";
 import styles from "./OrientationOverlay.module.css";
-import { LobbyBar } from "@/app/game/page";
 import { useGame } from "@/app/gameContext";
+import { LobbyBar } from "../LobbyBar";
 
 interface Props {
   /** If provided, shows a "Continua" button that is enabled only in landscape */
