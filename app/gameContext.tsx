@@ -60,7 +60,6 @@ export interface GameContextType {
   heal: (value: number) => void;
   isPlayerTurn: boolean;
   gameEnd: GameEnd | null;
-  log: string;
   enemyNextMove: EnemyMove;
   enemyNextMoveValue: number;
   playerAnimation: AnimationType;
@@ -108,7 +107,6 @@ export function GameProvider({ children }: { children: React.ReactNode }) {
   const [enemies, setEnemies] = useState<Enemy[]>([]);
 
   const [gameEnd, setGameEnd] = useState<GameEnd | null>(null);
-  const [log, setLog] = useState("⚔️ La battaglia è iniziata!");
 
   const [enemyNextMove, setEnemyNextMove] = useState<EnemyMove>(EnemyMove.IDLE);
   const [enemyNextMoveValue, setEnemyNextMoveValue] = useState<number>(0);
@@ -209,13 +207,11 @@ export function GameProvider({ children }: { children: React.ReactNode }) {
 
       if (newHp <= 0) {
         setGameEnd(GameEnd.LOSE);
-        setLog("💀 Il nemico ti ha sconfitto!");
       } else {
         setIsPlayerTurn(true);
         const nextMove = getRandomEnemyMove();
         setEnemyNextMove(nextMove);
         setEnemyNextMoveValue(calcMoveValue(nextMove, enemy));
-        setLog(logMsg);
       }
     }, 1200);
   };
@@ -227,7 +223,6 @@ export function GameProvider({ children }: { children: React.ReactNode }) {
 
     if (enemiesTemp.length === 0) {
       setGameEnd(GameEnd.ENDGAME);
-      setLog("🏆 Hai sconfitto tutti i nemici! Vittoria totale!");
       return;
     }
     generateHand();
@@ -248,7 +243,6 @@ export function GameProvider({ children }: { children: React.ReactNode }) {
     setEnemyNextMoveValue(calcMoveValue(nextMove, pool[0]));
     setGameEnd(null);
     generateHand();
-    setLog("⚔️ La battaglia è iniziata!");
   };
 
   // Azioni del giocatore
@@ -263,7 +257,6 @@ export function GameProvider({ children }: { children: React.ReactNode }) {
     if (newMonsterHp <= 0) {
       setTimeout(() => {
         setGameEnd(GameEnd.WIN);
-        setLog(`⚔️ Colpo finale per ${dmg} danni! Hai vinto!`);
         return;
       }, 750);
     } else {
@@ -271,7 +264,6 @@ export function GameProvider({ children }: { children: React.ReactNode }) {
         blocked > 0
           ? `⚔️ Attacchi per ${value} danni, ma il nemico blocca ${blocked}! Danno effettivo: ${dmg}`
           : `⚔️ Attacchi per ${dmg} danni!`;
-      setLog(logMsg);
       setEnemyAnimation("damage");
       doEnemyAction(player.hp);
     }
@@ -279,7 +271,6 @@ export function GameProvider({ children }: { children: React.ReactNode }) {
 
   const defend = (value: number) => {
     if (!isPlayerTurn || gameEnd) return;
-    setLog("🛡️ Ti metti in posizione difensiva...");
     setPlayerAnimation("defend");
     doEnemyAction(player.hp, value);
   };
@@ -291,7 +282,6 @@ export function GameProvider({ children }: { children: React.ReactNode }) {
     setPlayer({ ...player, hp: newHp });
 
     const actual = newHp - player.hp;
-    setLog(`💊 Recuperi ${actual} HP!`);
     setPlayerAnimation("heal");
     doEnemyAction(newHp);
   };
@@ -314,7 +304,6 @@ export function GameProvider({ children }: { children: React.ReactNode }) {
         heal,
         isPlayerTurn,
         gameEnd,
-        log,
         playerAnimation,
         enemyAnimation,
         clearAnimations,

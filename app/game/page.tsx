@@ -20,15 +20,8 @@ import { OrientationOverlay } from "@/components/OrientationOverlay/OrientationO
 
 // ── Shared game board — reused as-is by the watch page ──────────────────────
 export function GameBoard({ header }: { header?: ReactNode }) {
-  const {
-    player,
-    enemy,
-    startGame,
-    gameEnd,
-    log,
-    playerAnimation,
-    enemyAnimation,
-  } = useGame();
+  const { player, enemy, startGame, gameEnd, playerAnimation, enemyAnimation } =
+    useGame();
 
   return (
     <>
@@ -66,7 +59,6 @@ export function GameBoard({ header }: { header?: ReactNode }) {
             />
           )}
         </div>
-        <div className={styles["game-log"]}>{log}</div>
         {/* Bottoni azione */}
         {/* <div className={styles["game-actions"]}>
         <button

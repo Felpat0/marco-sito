@@ -41,7 +41,7 @@ export const ENEMY_POOL: EnemyDB[] = [
     name: "Gremrika Gizmo",
     finalMessage:
       "Finalmente! Eravamo rimasti senza preghiere e senza fioretto, ormai pensavamo che il prof di Analisi ti avrebbe inserito nello stato di famiglia! È stata una battaglia epica, ma alla fine hai vinto tu per sfinimento dell’avversario. Congratulazioni Dottore, goditi il traguardo!",
-    image: "https://placehold.co/160x160/a855f7/fff?text=Erika", //TODO
+    image: "/images/enemy/Erika.png",
   },
   {
     name: "Davide", //TODO
@@ -50,46 +50,58 @@ export const ENEMY_POOL: EnemyDB[] = [
     image: "https://placehold.co/160x160/ef4444/fff?text=Davide", //TODO
   },
   {
-    name: "Vincenzo", //TODO
+    name: "Vincenzonte",
     finalMessage:
       "Siamo cresciuti insieme e sappiamo che la fortuna non ti manca, ma per questa laurea il 'culo sfacciato' non è bastato: te lo sei dovuto rompere per davvero. Orgogliosi di te, dottore!",
-    image: "https://placehold.co/160x160/94a3b8/fff?text=Vincenzo", //TODO
+    image: "/images/enemy/Vins.png",
   },
   {
     name: "Vapurby",
     finalMessage:
       "Anche se non te lo dico mai, sono incredibilmente fiero di te e del tuo percorso. Ti voglio bene.",
-    image: "https://placehold.co/160x160/94a3b8/fff?text=Valerio", //TODO
+    image: "/images/enemy/Vape.png",
   },
   {
     name: "Banshylenia",
     finalMessage:
       "Tra una spalla distrutta, la palestra, i tornei e le serate, sei riuscito pure a laurearti. Non male come build",
-    image: "https://placehold.co/160x160/a855f7/fff?text=Goblin", //TODO
+    image: "/images/enemy/Ylenia.png",
   },
   {
     name: "Principessa Sirelena",
     finalMessage:
       "Tanti auguri per essere finalmente riuscito ad entrare nel club dei laureati! Ma.. in cosa ti sei laureato?",
-    image: "https://placehold.co/160x160/ef4444/fff?text=Elena", //TODO
+    image: "/images/enemy/Elena.png",
   },
   {
     name: "Sfinge di Chiapatra",
     finalMessage:
       "Super congratulazioni per questo enorme traguardo... anche se matematica era meglio.",
-    image: "https://placehold.co/160x160/94a3b8/fff?text=Chiara", //TODO
+    image: "/images/enemy/Chiara.png",
   },
   {
     name: "Death - Cattini con gli stivalini",
     finalMessage:
       "Il temibile Gabbibbo appare! Lorem ipsum dolor sit amet, un drago feroce appare! Lorem ipsum dolor sit amet, un drago feroce appare!", //TODO
-    image: "https://placehold.co/160x160/94a3b8/fff?text=Federico", //TODO
+    image: "/images/enemy/Fede.png",
   },
   {
     name: "Riccarbibbo",
     finalMessage:
       "Congratulazioni per questo grande traguardo! Ti aspettano nuovi mondi da esplorare, ovunque andrai non ti scorderò mai: dopotutto, il primo bacio non si scorda mai!",
-    image: "https://placehold.co/160x160/a855f7/fff?text=Perrone", //TODO
+    image: "/images/enemy/Perr.png",
+  },
+  {
+    name: "Andrea", //TODO
+    finalMessage:
+      "Lorem ipsum dolor sit amet, un drago feroce appare! Lorem ipsum dolor sit amet, un drago feroce appare! Lorem ipsum dolor sit amet, un drago feroce appare!", //TODO
+    image: "https://placehold.co/160x160/3b82f6/fff?text=Andrea", //TODO
+  },
+  {
+    name: "Giacomo", //TODO
+    finalMessage:
+      "Lorem ipsum dolor sit amet, un drago feroce appare! Lorem ipsum dolor sit amet, un drago feroce appare! Lorem ipsum dolor sit amet, un drago feroce appare!", //TODO
+    image: "https://placehold.co/160x160/3b82f6/fff?text=Giacomo", //TODO
   },
 ];
 

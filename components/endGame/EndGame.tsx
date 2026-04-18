@@ -96,7 +96,7 @@ function buildCirclePositions(count: number): { top: string; left: string }[] {
 
 export default function EndGame() {
   const router = useRouter();
-  const [phase, setPhase] = useState<"chaos" | "circle">("chaos");
+  const [phase, setPhase] = useState<"chaos" | "circle" | "reward">("chaos");
   const [circlePos, setCirclePos] = useState<
     { top: string; left: string }[] | null
   >(null);
@@ -161,7 +161,7 @@ export default function EndGame() {
               Continua
             </button>
           </>
-        ) : (
+        ) : phase === "circle" ? (
           <>
             <h2 className={styles["game-over-title"]}>
               Dai tuoi{" "}
@@ -171,12 +171,18 @@ export default function EndGame() {
               <span>CONGRATULAZIONI!</span>
             </h2>
             <button
-              onClick={() => router.push("/compose")}
+              onClick={() => setPhase("reward")}
               className={styles["game-replay-btn"]}
             >
-              Ricomincia
+              Prendi la tua reward
             </button>
           </>
+        ) : (
+          <img
+            src="/images/finale.png"
+            alt="Reward finale"
+            className={styles["reward-image"]}
+          />
         )}
       </div>
     </div>
