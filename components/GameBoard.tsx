@@ -8,10 +8,12 @@ import { BottomUI } from "@/components/gameplay-ui/BottomUI";
 import Character from "@/components/character/Character";
 import EndGame from "@/components/endGame/EndGame";
 import { OrientationOverlay } from "@/components/OrientationOverlay/OrientationOverlay";
+import { useOrientation } from "@/hooks/useOrientation";
 
 export function GameBoard({ header }: { header?: ReactNode }) {
   const { player, enemy, startGame, gameEnd, playerAnimation, enemyAnimation } =
     useGame();
+  const { isLandscape } = useOrientation();
 
   return (
     <>
@@ -53,7 +55,7 @@ export function GameBoard({ header }: { header?: ReactNode }) {
       <div className={styles["hand-container"]}>
         <BottomUI />
       </div>
-      <OrientationOverlay />
+      {!isLandscape && <OrientationOverlay />}
     </>
   );
 }
