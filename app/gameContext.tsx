@@ -31,6 +31,7 @@ export function getRandomEnemyMove(): EnemyMove {
     EnemyMove.DEFEND,
     EnemyMove.HEAL,
     EnemyMove.IDLE,
+    EnemyMove.IDLE,
   ];
   const idx = Math.floor(Math.random() * moves.length);
   return moves[idx];
