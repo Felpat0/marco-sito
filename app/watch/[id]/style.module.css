@@ -49,19 +49,6 @@
   gap: 1rem;
 }
 
-/* ── Log ── */
-.log {
-  color: #9ca3af;
-  font-style: italic;
-  font-size: 0.875rem;
-  text-align: center;
-  min-height: 1.5rem;
-  padding: 0.5rem 1rem;
-  background: rgba(0, 0, 0, 0.4);
-  border-radius: 0.5rem;
-  width: 100%;
-}
-
 /* ── Game end banner ── */
 .gameEndBanner {
   font-size: 1.5rem;

@@ -137,7 +137,6 @@ export function GameProvider({ children }: { children: React.ReactNode }) {
           player,
           enemy: enemies[0] ?? null,
           gameEnd,
-          log,
           hand,
           playerAnimation,
           enemyAnimation,
@@ -145,7 +144,7 @@ export function GameProvider({ children }: { children: React.ReactNode }) {
         }),
       }).catch(() => {});
     }, 200);
-  }, [player, enemies, gameEnd, log, hand, lobbyId]);
+  }, [player, enemies, gameEnd, hand, lobbyId]);
 
   const clearAnimations = () => {
     setPlayerAnimation(null);
