@@ -5,6 +5,13 @@ import { QRCodeSVG } from "qrcode.react";
 import { GameEnd, useGame } from "../gameContext";
 import { GameBoard } from "@/components/GameBoard";
 
+// - schermada finale con foto
+// ------------------
+// - foto carte
+// - foto mostri
+// - boss finale
+// - suoni
+
 // ── Host-only game page ───────────────────────────────────────────────────────
 export default function GamePage() {
   const { startGame, setGameEnd, lobbyId, createLobby } = useGame();
