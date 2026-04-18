@@ -69,7 +69,6 @@ function WatchProviders({
     heal: NOOP,
     isPlayerTurn: false,
     gameEnd: state.gameEnd as GameEnd | null,
-    log: state.log,
     enemyNextMove: EnemyMove.IDLE,
     enemyNextMoveValue: 0,
     playerAnimation: state.playerAnimation ?? null,
