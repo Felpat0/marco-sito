@@ -57,7 +57,6 @@
 .floating-enemy {
   position: absolute;
   width: 110px;
-  height: 110px;
   border-radius: 50%;
   animation-iteration-count: infinite;
   animation-timing-function: ease-in-out;
@@ -246,5 +245,31 @@
   }
   90% {
     transform: translate(-4px, 9px) rotate(-2deg);
+  }
+}
+
+/* ── Reward image ── */
+.reward-image {
+  position: fixed;
+  bottom: 0;
+  left: 50%;
+  transform: translateX(-50%) translateY(100%);
+  max-width: 100vw;
+  max-height: 100vh;
+  width: auto;
+  height: auto;
+  object-fit: contain;
+  z-index: 20;
+  animation: rewardSlideUp 0.7s cubic-bezier(0.22, 1, 0.36, 1) forwards;
+}
+
+@keyframes rewardSlideUp {
+  from {
+    transform: translateX(-50%) translateY(100%);
+    opacity: 0;
+  }
+  to {
+    transform: translateX(-50%) translateY(0%);
+    opacity: 1;
   }
 }

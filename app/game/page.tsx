@@ -22,7 +22,6 @@ export default function GamePage() {
     enemy,
     startGame,
     gameEnd,
-    log,
     playerAnimation,
     enemyAnimation,
     setGameEnd,
@@ -35,20 +34,20 @@ export default function GamePage() {
   return (
     <>
       <div className={styles["game-page"]}>
-        <button
-          onTouchStart={() => setGameEnd(GameEnd.ENDGAME)}
-          onClick={() => setGameEnd(GameEnd.ENDGAME)}
-          style={{ zIndex: 10000 }}
-        >
-          win game
-        </button>
-        <button
-          onTouchStart={() => setGameEnd(GameEnd.WIN)}
-          onClick={() => setGameEnd(GameEnd.WIN)}
-          style={{ zIndex: 10000 }}
-        >
-          win fight
-        </button>
+        <div style={{ position: "absolute", zIndex: 1000 }}>
+          <button
+            onTouchStart={() => setGameEnd(GameEnd.ENDGAME)}
+            onClick={() => setGameEnd(GameEnd.ENDGAME)}
+          >
+            win game
+          </button>
+          <button
+            onTouchStart={() => setGameEnd(GameEnd.WIN)}
+            onClick={() => setGameEnd(GameEnd.WIN)}
+          >
+            win fight
+          </button>
+        </div>
         {gameEnd === GameEnd.LOSE && (
           <div className={styles["game-overlay"]}>
             <div className={styles["game-overlay-content"]}>
@@ -86,9 +85,6 @@ export default function GamePage() {
             />
           )}
         </div>
-
-        {/* Log turno */}
-        <div className={styles["game-log"]}>{log}</div>
         {/* Bottoni azione */}
         {/* <div className={styles["game-actions"]}>
         <button
