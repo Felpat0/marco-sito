@@ -39,7 +39,7 @@ export default function GamePage() {
 }
 
 // ── Lobby sharing bar ──────────────────────────────────────────
-function LobbyBar({
+export function LobbyBar({
   lobbyId,
   createLobby,
 }: {
@@ -70,14 +70,14 @@ function LobbyBar({
   };
 
   const btnStyle: React.CSSProperties = {
-    padding: "0.3rem 0.7rem",
+    padding: "0.2rem 0.55rem",
     background: "#eab308",
     color: "#000",
     fontWeight: 700,
     border: "none",
     borderRadius: "0.5rem",
     cursor: "pointer",
-    fontSize: "0.78rem",
+    fontSize: "0.7rem",
   };
 
   if (!lobbyId) {
@@ -92,7 +92,15 @@ function LobbyBar({
 
   return (
     <div style={barStyle}>
-      <div style={{ display: "flex", alignItems: "center", gap: "0.5rem" }}>
+      <div
+        style={{
+          display: "flex",
+          alignItems: "center",
+          gap: "0.5rem",
+          flexDirection: "column",
+          fontSize: "0.6rem",
+        }}
+      >
         <span style={{ color: "#facc15", fontWeight: 700 }}>{lobbyId}</span>
         <button style={btnStyle} onClick={() => setShowQr((v) => !v)}>
           {showQr ? "✖" : "QR"}

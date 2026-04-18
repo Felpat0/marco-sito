@@ -2,6 +2,8 @@
 
 import { useOrientation } from "@/hooks/useOrientation";
 import styles from "./OrientationOverlay.module.css";
+import { LobbyBar } from "@/app/game/page";
+import { useGame } from "@/app/gameContext";
 
 interface Props {
   /** If provided, shows a "Continua" button that is enabled only in landscape */
@@ -9,15 +11,15 @@ interface Props {
 }
 
 export function OrientationOverlay({ onContinue }: Props) {
-  const { isLandscape, isMobile } = useOrientation();
+  const { isLandscape } = useOrientation();
+
+  const { lobbyId, createLobby } = useGame();
 
   return (
     <div className={styles.overlay} role="alertdialog" aria-modal="true">
       {isLandscape ? (
         <>
-          <span className={styles.icon} aria-hidden="true">
-            📱
-          </span>
+          <LobbyBar lobbyId={lobbyId} createLobby={createLobby} />
           <p className={styles.title}>Condividi la tua partita</p>
         </>
       ) : (
