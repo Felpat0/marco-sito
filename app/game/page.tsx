@@ -6,20 +6,25 @@ import styles from "./style.module.css";
 import WinCard from "@/components/winCard/WinCard";
 import { BottomUI } from "@/components/gameplay-ui/BottomUI";
 import Character from "@/components/character/Character";
+import EndGame from "@/components/endGame/EndGame";
+
+// - schermada finale con foto
+// ------------------
+// - foto carte
+// - foto mostri
+// - boss finale
+// - suoni
 
 export default function GamePage() {
   const {
     player,
     enemy,
     startGame,
-    attack,
-    defend,
-    heal,
-    isPlayerTurn,
     gameEnd,
     log,
     playerAnimation,
     enemyAnimation,
+    setGameEnd,
   } = useGame();
 
   useEffect(() => {
@@ -29,6 +34,13 @@ export default function GamePage() {
   return (
     <>
       <div className={styles["game-page"]}>
+        <button
+          onTouchStart={() => setGameEnd(GameEnd.ENDGAME)}
+          onClick={() => setGameEnd(GameEnd.ENDGAME)}
+          style={{ zIndex: 10000 }}
+        >
+          win game
+        </button>
         {gameEnd === GameEnd.LOSE && (
           <div className={styles["game-overlay"]}>
             <div className={styles["game-overlay-content"]}>
@@ -39,19 +51,9 @@ export default function GamePage() {
             </div>
           </div>
         )}
+        {gameEnd === GameEnd.ENDGAME && <EndGame />}
         {gameEnd === GameEnd.WIN && <WinCard />}
-        {gameEnd === GameEnd.ENDGAME && (
-          <div className={styles["game-overlay"]}>
-            <div className={styles["game-overlay-content"]}>
-              <h2 className={styles["game-over-title"]}>
-                🏆 Hai vinto! Hai sconfitto tutti i nemici!
-              </h2>
-              <button onClick={startGame} className={styles["game-replay-btn"]}>
-                Ricomincia
-              </button>
-            </div>
-          </div>
-        )}
+        {/* <EndGame /> */}
         {/* Sezione personaggi */}
         <div className={styles["game-arena"]}>
           {/* Personaggio giocatore */}
@@ -74,22 +76,6 @@ export default function GamePage() {
               variant="monster"
               animation={enemyAnimation}
             />
-          )}
-          {gameEnd === GameEnd.WIN && <WinCard />}
-          {gameEnd === GameEnd.ENDGAME && (
-            <div className={styles["game-overlay"]}>
-              <div className={styles["game-overlay-content"]}>
-                <h2 className={styles["game-over-title"]}>
-                  🏆 Hai vinto! Hai sconfitto tutti i nemici!
-                </h2>
-                <button
-                  onClick={startGame}
-                  className={styles["game-replay-btn"]}
-                >
-                  Ricomincia
-                </button>
-              </div>
-            </div>
           )}
         </div>
 
