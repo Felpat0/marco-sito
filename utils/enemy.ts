@@ -24,7 +24,7 @@ export interface Character {
 
 export const RANDOM_FACTOR = 0.2;
 
-export const ENEMY_HP = 80;
+export const ENEMY_HP = 20;
 export const ENEMY_HP_INCREMENT = 0.2;
 
 export const ENEMY_ATTACK = 5;
@@ -92,10 +92,10 @@ export const ENEMY_POOL: EnemyDB[] = [
     image: "/images/enemy/Perr.png",
   },
   {
-    name: "Andrea", //TODO
+    name: "Scimpandré ",
     finalMessage:
       "Lorem ipsum dolor sit amet, un drago feroce appare! Lorem ipsum dolor sit amet, un drago feroce appare! Lorem ipsum dolor sit amet, un drago feroce appare!", //TODO
-    image: "https://placehold.co/160x160/3b82f6/fff?text=Andrea", //TODO
+    image: "/images/enemy/Andrea.png",
   },
   {
     name: "Giacomo", //TODO
