@@ -25,15 +25,15 @@ export interface Character {
 export const RANDOM_FACTOR = 0.2;
 
 export const ENEMY_HP = 10;
-export const ENEMY_HP_INCREMENT = 0.2;
+export const ENEMY_HP_INCREMENT = 0.1;
 
 export const ENEMY_ATTACK = 5;
-export const ENEMY_ATTACK_INCREMENT = 0.2;
+export const ENEMY_ATTACK_INCREMENT = 0.1;
 
-export const ENEMY_DEFENSE = 1;
-export const ENEMY_DEFENSE_INCREMENT = 0.2;
+export const ENEMY_DEFENSE = 2;
+export const ENEMY_DEFENSE_INCREMENT = 0.1;
 
-export const ENEMY_HEAL = 1;
+export const ENEMY_HEAL = 2;
 export const ENEMY_HEAL_INCREMENT = 0.2;
 
 export const ENEMY_POOL: EnemyDB[] = [

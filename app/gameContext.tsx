@@ -37,6 +37,7 @@ export function getRandomEnemyMove(): EnemyMove {
     EnemyMove.DEFEND,
     EnemyMove.HEAL,
     EnemyMove.IDLE,
+    EnemyMove.IDLE,
   ];
   const idx = Math.floor(Math.random() * moves.length);
   return moves[idx];
@@ -260,13 +261,10 @@ export function GameProvider({ children }: { children: React.ReactNode }) {
         return;
       }, 750);
     } else {
-      const logMsg =
-        blocked > 0
-          ? `⚔️ Attacchi per ${value} danni, ma il nemico blocca ${blocked}! Danno effettivo: ${dmg}`
-          : `⚔️ Attacchi per ${dmg} danni!`;
       setEnemyAnimation("damage");
       doEnemyAction(player.hp);
     }
+    setEnemyDefenseValue(0);
   };
 
   const defend = (value: number) => {
