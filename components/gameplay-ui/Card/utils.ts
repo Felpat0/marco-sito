@@ -1,3 +1,5 @@
+import { CardType } from "@/features/cardsManagement/types";
+
 const CARDS_ROTATION = 5;
 const CARDS_HEIGHT_OFFSET = 10;
 
@@ -28,4 +30,17 @@ export const getCardHeightOffset = (index: number, totalCards: number) => {
   const offset = -1 * Math.abs(index - centerIndex);
 
   return offset * CARDS_HEIGHT_OFFSET; // Adjust the multiplier for more or less height difference
+};
+
+export const getCardTypeColor = (cardType?: CardType["type"]) => {
+  switch (cardType) {
+    case "attack":
+      return "red"; // Red for attack cards
+    case "defend":
+      return "#2563eb"; // Blue for defense cards
+    case "heal":
+      return "green"; // Green for magic cards
+    default:
+      return "#cccccc"; // Default gray color
+  }
 };

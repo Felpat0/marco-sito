@@ -88,10 +88,10 @@ function calcMoveValue(move: EnemyMove, enemy: Enemy): number {
       return 0;
   }
 }
-//TODO: DA rimuovere e sostuituire con parte di chiara
+
 export const PLAYER_INIT: Character = {
-  hp: 100,
-  maxHp: 100,
+  hp: 20,
+  maxHp: 20,
   name: "Marco SpallaRotta",
   image: "https://placehold.co/160x160/22c55e/fff?text=Hero",
 };
@@ -231,6 +231,7 @@ export function GameProvider({ children }: { children: React.ReactNode }) {
     setEnemies(enemiesTemp);
     setEnemyNextMove(nextMove);
     setEnemyNextMoveValue(calcMoveValue(nextMove, enemiesTemp[0]));
+    setPlayer((p) => ({ ...p, hp: p.hp + 5, maxHp: p.maxHp + 5 }));
   };
 
   const startGame = () => {

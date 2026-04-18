@@ -1,5 +1,11 @@
 import { StyleStructure } from "@/types";
-import { getCardHeightOffset, getCardRotation, getCardZIndex } from "./utils";
+import {
+  getCardHeightOffset,
+  getCardRotation,
+  getCardTypeColor,
+  getCardZIndex,
+} from "./utils";
+import { CardType } from "@/features/cardsManagement/types";
 
 type CardStylesArguments = {
   index?: number;
@@ -8,6 +14,7 @@ type CardStylesArguments = {
   touchPosition?: { top: number; left: number };
   initialPositionOffset?: { top: number; left: number };
   imageUrl?: string;
+  cardType?: CardType["type"];
 };
 
 export const getCardStyles: (args: CardStylesArguments) => StyleStructure = ({
@@ -16,6 +23,7 @@ export const getCardStyles: (args: CardStylesArguments) => StyleStructure = ({
   isHovered = false,
   touchPosition = { top: 0, left: 0 },
   initialPositionOffset = { top: 0, left: 0 },
+  cardType,
   imageUrl = "",
 }) => ({
   cardContainer: {
@@ -24,7 +32,7 @@ export const getCardStyles: (args: CardStylesArguments) => StyleStructure = ({
       display: "flex",
       flexDirection: "column",
       justifyContent: "flex-end",
-      border: "1px solid #ccc",
+      border: `1px solid ${getCardTypeColor(cardType)}`,
       borderRadius: "8px",
       padding: "16px",
       marginBottom: `calc(-20px + ${getCardHeightOffset(index, cardsNumber)}px)`,
@@ -39,12 +47,14 @@ export const getCardStyles: (args: CardStylesArguments) => StyleStructure = ({
     },
     hover: {
       position: "absolute",
-      transform: `rotate(0deg) scale(2)`,
+      transform: `rotate(0deg) scale(2.3)`,
       transition: "transform 0.3s ease",
       zIndex: 100,
       top: touchPosition?.top - initialPositionOffset?.top,
       left: touchPosition?.left - initialPositionOffset?.left,
       marginTop: 0,
+      boxShadow: `0px 0px 7px 4px ${getCardTypeColor(cardType)}`,
+      border: "none",
     },
   },
   cardName: {

@@ -3,20 +3,11 @@
 import { useEffect, useRef, useState } from "react";
 import { QRCodeSVG } from "qrcode.react";
 import { GameEnd, useGame } from "../gameContext";
-import styles from "./style.module.css";
 import { GameBoard } from "@/components/GameBoard";
-
-// - schermada finale con foto
-// ------------------
-// - girare il telefono
-// - foto carte
-// - foto mostri
-// - boss finale
-// - suoni
 
 // ── Host-only game page ───────────────────────────────────────────────────────
 export default function GamePage() {
-  const { startGame, lobbyId, createLobby, setGameEnd } = useGame();
+  const { startGame, setGameEnd, lobbyId, createLobby } = useGame();
 
   useEffect(() => {
     startGame();
